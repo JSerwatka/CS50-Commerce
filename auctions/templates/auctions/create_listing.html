@@ -1,0 +1,28 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<h1>Create Listing</h1>
+<form>
+    <div class="form-group">
+        {{ form.title.label }}:
+        <br>
+        {{ form.title }}
+    </div>
+    <div class="form-group">
+        {{ form.description.label }}:
+        <br>
+        {{ form.description }}
+    </div>
+    <div class="form-groupk">
+        {{ form.category.label }}:
+        <br>
+        {{ form.category }}
+    </div>
+    <div class="form-group">
+        {{ form.image_url.label }}:
+        <br>
+        {{ form.image_url }}
+    </div>
+    <button type="submit" class="btn btn-primary" aria-label="submit">Submit</button>
+  </form>
+{% endblock %}

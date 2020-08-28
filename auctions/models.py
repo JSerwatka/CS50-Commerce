@@ -31,10 +31,11 @@ class Auction(models.Model):
 
     # Model fields
     # auto: auction_id
+    seller_id = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=64, blank=False)
     description = models.TextField(blank=True)
-    seller_id = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.CharField(max_length=3, choices=CATEGORY, default=MOTORS)
+    image_url = models.URLField(blank=True)
     publication_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:

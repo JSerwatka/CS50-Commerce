@@ -3,12 +3,38 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django import forms
 
-from .models import User
+from .models import User, Auction, Bid, Comment, Watchlist
 
+# ----------------------
+# ------  Forms  -------
+# ----------------------
+class CreateListingForm(forms.ModelForm):
+    title = forms.CharField(label="Title", max_length=64, required=True, widget=forms.TextInput(attrs={
+                                                                            "autocomplete": "off",
+                                                                            "aria-label": "title"
+                                                                        }))
+    description = forms.CharField(label="Description", widget=forms.Textarea(attrs={      
+                                    'placeholder': "Tell more about the product",
+                                    'aria-label': "description"
+                                    }))
 
+    class Meta:
+        model = Auction
+        fields = ["title", "description", "category", "image_url"]
+        
+
+# ----------------------
+# ------  Views  -------
+# ----------------------
 def index(request):
     return render(request, "auctions/index.html")
+
+def create_listing(request):
+    return render(request, "auctions/create_listing.html", {
+        "form": CreateListingForm(),
+    })
 
 
 def login_view(request):
