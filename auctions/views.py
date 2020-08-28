@@ -63,6 +63,10 @@ def login_view(request):
         # Check if authentication successful
         if user is not None:
             login(request, user)
+
+            # If user tried to enter login_required page - go there after login
+            if "next" in request.POST:
+                return HttpResponseRedirect(reverse("auctions:" + request.POST.get("next")[1:]))
             return HttpResponseRedirect(reverse("auctions:index"))
         else:
             return render(request, "auctions/login.html", {
