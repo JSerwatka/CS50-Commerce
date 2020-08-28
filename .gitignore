@@ -1,0 +1,6 @@
+venv
+.vscode
+.history
+/auctions/migrations
+/auctions/__pycache__
+/commerce/__pycache__
