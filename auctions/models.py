@@ -31,28 +31,47 @@ class Auction(models.Model):
 
     # Model fields
     # auto: auction_id
-    # fk: user_Id #TODO
+    title = models.CharField(max_length=64, blank=False)
+    description = models.TextField(blank=True)
+    seller_id = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.CharField(max_length=3, choices=CATEGORY, default=MOTORS)
     publication_date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "auction"
+        verbose_name_plural = "auctions"
 
 class Bid(models.Model):
     # Model fields
     # auto: bid_id
-    # fk: auction_id #TODO
-    # fk: user_id #TODO
+    auction_id = models.ForeignKey(Auction, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     bid_date = models.DateTimeField(auto_now_add=True)
     bid_price = models.DecimalField(max_digits=11, decimal_places=2)
+
+    class Meta:
+        verbose_name = "bid"
+        verbose_name_plural = "bids"
 
 class Comment(models.Model):
     # Model fields
     # auto: comment_id
-    # fk: auction_id #TODO
-    # fk: user_id #TODO
-    comment = models.TextField()
+    auction_id = models.ForeignKey(Auction, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.TextField(blank=False)
 
-class Watchlis(models.Model):
+    class Meta:
+        verbose_name = "comment"
+        verbose_name_plural = "comments"
+
+
+class Watchlist(models.Model):
     # Model field
     # auto: watchlist_id
-    # fk: auction_id #TODO
-    # fk: user_id #TODO
-    pass
+    auction_id = models.ForeignKey(Auction, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = "watchlist"
+        verbose_name_plural = "watchlists"
+
