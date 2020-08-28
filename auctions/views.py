@@ -19,6 +19,7 @@ class CreateListingForm(forms.ModelForm):
                                     'placeholder': "Tell more about the product",
                                     'aria-label': "description"
                                     }))
+    image_url = forms.URLField(label="Image URL", required=False)
 
     class Meta:
         model = Auction
@@ -32,6 +33,19 @@ def index(request):
     return render(request, "auctions/index.html")
 
 def create_listing(request):
+    if request.method == "POST":
+        form = CreateListingForm(request.POST)
+        if form.is_valid():
+            title = form.cleaned_data["title"]
+            description = form.cleaned_data["description"]
+            category = form.cleaned_data["category"]
+            image_url = form.cleaned_data["image_url"]
+            print(list((title, description, category, image_url)))
+        else:
+            return render(request, "auctions/create_listing.html", {
+                "form": form
+            })
+
     return render(request, "auctions/create_listing.html", {
         "form": CreateListingForm(),
     })

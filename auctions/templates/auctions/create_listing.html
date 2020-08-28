@@ -2,7 +2,8 @@
 
 {% block body %}
 <h1>Create Listing</h1>
-<form>
+<form action="{% url 'auctions:create_listing' %}", method="POST">
+    {% csrf_token %}
     <div class="form-group">
         {{ form.title.label }}:
         <br>
