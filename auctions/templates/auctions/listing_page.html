@@ -1,0 +1,17 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<h1>{{auction.title}}</h1>
+<img src="{{ auction.image_url }}" alt="{{ auction.title }} photo"  width="350" height="400">
+<h6>{{auction.description}}</h6>
+<h6>Created on: {{auction.publication_date}}</h6>
+<h5>Current Price {{auction.current_price}} $</h5>
+
+<!-- #TODO amount of bids -->
+
+<h2>Details</h2>
+<ul>
+    <!-- <li>Listed by: #TODO</li> -->
+    <l1>Category: {{auction.get_category_display}}</l1>
+</ul>
+{% endblock %}

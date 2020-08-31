@@ -67,6 +67,13 @@ def create_listing(request):
         "form": CreateListingForm(),
     })
 
+def listing_page(request, auction_id):
+    auction = Auction.objects.get(pk=auction_id)
+
+    return render(request, "auctions/listing_page.html", {
+        "auction": auction
+    })
+
 
 def login_view(request):
     if request.method == "POST":
