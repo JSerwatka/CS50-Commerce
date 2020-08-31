@@ -7,7 +7,12 @@
 {% endif %}
 <h6>{{auction.description}}</h6>
 <h6>Created on: {{auction.publication_date}}</h6>
-<h5>Current Price {{auction.current_price}} $</h5>
+<h3>Current Price {{auction.current_price}} $</h3>
+{% if bid_amount != 0 %}
+    {{ bid_amount }} bid(s) so far. {{ message }}
+{% else %}
+    No bids so far.
+{% endif %}
 
 <!-- #TODO amount of bids -->
 

@@ -68,10 +68,26 @@ def create_listing(request):
     })
 
 def listing_page(request, auction_id):
+    # Get current auction
     auction = Auction.objects.get(pk=auction_id)
+    
+    # Get info about bids
+    bid_amount = Bid.objects.filter(auction_id=auction_id).count()
+    highest_bid = Bid.objects.order_by('-bid_price').first()
+
+    # Check who has made the highest bid
+    if highest_bid is not None:
+        if highest_bid.user_id == request.user.id:
+            bid_message = "Your bid is the current bid"
+        else: 
+            bid_message = "Highest bid made by " + highest_bid.user_id.username
+    else:
+        bid_message = None
 
     return render(request, "auctions/listing_page.html", {
-        "auction": auction
+        "auction": auction,
+        "bid_amount": bid_amount,
+        "bid_message": bid_message
     })
 
 
