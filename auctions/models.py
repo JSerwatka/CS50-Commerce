@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-
+#TODO: Add __str__ representation
 
 class User(AbstractUser):
     pass
@@ -34,7 +34,7 @@ class Auction(models.Model):
     seller_id = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=64, blank=False)
     description = models.TextField(blank=True)
-    current_price = models.DecimalField(max_digits=11, decimal_places=2, default=0)
+    current_price = models.DecimalField(max_digits=11, decimal_places=2, default=0.0)
     category = models.CharField(max_length=3, choices=CATEGORY, default=MOTORS)
     image_url = models.URLField(blank=True)
     publication_date = models.DateTimeField(auto_now_add=True)
