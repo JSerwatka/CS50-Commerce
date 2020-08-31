@@ -31,8 +31,8 @@ class CreateListingForm(forms.ModelForm):
 # ------  Views  -------
 # ----------------------
 def index(request):
-    # Get all auctions
-    auctions = Auction.objects.all()
+    # Get all auctions descending
+    auctions = Auction.objects.all().order_by("-publication_date")
 
     return render(request, "auctions/index.html", {
         "auctions": auctions

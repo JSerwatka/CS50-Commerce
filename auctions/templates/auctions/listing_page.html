@@ -2,7 +2,9 @@
 
 {% block body %}
 <h1>{{auction.title}}</h1>
-<img src="{{ auction.image_url }}" alt="{{ auction.title }} photo"  width="350" height="400">
+{% if auction.image_url %}
+    <img src="{{ auction.image_url }}" alt="{{ auction.title }} photo"  width="350" height="400">
+{% endif %}
 <h6>{{auction.description}}</h6>
 <h6>Created on: {{auction.publication_date}}</h6>
 <h5>Current Price {{auction.current_price}} $</h5>
