@@ -3,5 +3,9 @@
 {% block body %}
     <h2>Active Listings</h2>
 
-    TODO
+    {% for auction in auctions %}
+    <li>{{ auction.title }}: {{ auction.description }} {{auction.category}} {{auction.current_price}} {{auction.publication_date}}</li>
+    {% empty %}
+    No auctions yet
+    {% endfor %}
 {% endblock %}

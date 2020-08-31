@@ -31,7 +31,12 @@ class CreateListingForm(forms.ModelForm):
 # ------  Views  -------
 # ----------------------
 def index(request):
-    return render(request, "auctions/index.html")
+    # Get all auctions
+    auctions = Auction.objects.all()
+
+    return render(request, "auctions/index.html", {
+        "auctions": auctions
+    })
 
 @login_required(login_url="auctions:login")
 def create_listing(request):
@@ -44,6 +49,7 @@ def create_listing(request):
             category = form.cleaned_data["category"]
             image_url = form.cleaned_data["image_url"]
 
+            # Save a record
             auction = Auction(
                 seller_id=User.objects.get(id=request.user.id),
                 title = title,
@@ -52,7 +58,6 @@ def create_listing(request):
                 image_url = image_url
             )
             auction.save()
-
         else:
             return render(request, "auctions/create_listing.html", {
                 "form": form
