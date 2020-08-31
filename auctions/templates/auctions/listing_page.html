@@ -2,6 +2,11 @@
 
 {% block body %}
 <h1>{{auction.title}}</h1>
+<form action="{% url 'auctions:watchlist' %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Add to watchlist">
+    <input type="hidden" name="next" value="{{ request.path }}">
+</form>
 {% if auction.image_url %}
     <img src="{{ auction.image_url }}" alt="{{ auction.title }} photo"  width="350" height="400">
 {% endif %}

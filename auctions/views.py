@@ -11,6 +11,7 @@ from .models import User, Auction, Bid, Comment, Watchlist
 # ----------------------
 # ------  Forms  -------
 # ----------------------
+
 class CreateListingForm(forms.ModelForm):
     title = forms.CharField(label="Title", max_length=64, required=True, widget=forms.TextInput(attrs={
                                                                             "autocomplete": "off",
@@ -25,7 +26,6 @@ class CreateListingForm(forms.ModelForm):
     class Meta:
         model = Auction
         fields = ["title", "description", "category", "image_url"]
-        
 
 # ----------------------
 # ------  Views  -------
@@ -88,6 +88,19 @@ def listing_page(request, auction_id):
         "auction": auction,
         "bid_amount": bid_amount,
         "bid_message": bid_message
+    })
+
+@login_required(login_url="auctions:login")
+def watchlist(request):
+    if request.method == "POST":
+        print("test")
+        next = request.POST.get('next', '/')
+        return HttpResponseRedirect(next)
+
+    watchlisted = Watchlist.objects.filter(user_id=request.user.id)
+
+    return render(request, "auctions/watchlist.html", {
+        "watchlisted": watchlisted
     })
 
 
