@@ -11,6 +11,10 @@ from django.db import IntegrityError
 
 from .models import User, Auction, Bid, Comment, Watchlist
 
+
+#TODO: delete next page in watchlist and use just auction id
+#TODO: the same in bid
+
 # ----------------------
 # ------  Forms  -------
 # ----------------------
@@ -110,7 +114,7 @@ def listing_page(request, auction_id):
     # Check who has made the highest bid
     if highest_bid is not None:
         if highest_bid.user_id == request.user.id:
-            bid_message = "Your bid is the current bid"
+            bid_message = "Your bid is the highest bid"
         else:
             bid_message = "Highest bid made by " + highest_bid.user_id.username
     else:
@@ -159,7 +163,6 @@ def watchlist(request):
                     user_id = user_id,
                     auction_id = auction_id
                 )
-                print(watchlist_item)
                 watchlist_item.save()
             # Make sure it is not duplicated for current user
             except IntegrityError:

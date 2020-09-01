@@ -4,7 +4,7 @@
 <h1>{{auction.title}}</h1>
 
 <!-- --- Watchlist button --- -->
-{% if user.is_authenticated %}
+{% if user.is_authenticated and user.id != auction.seller_id.id %}
     <form action="{% url 'auctions:watchlist' %}" method="POST">
         {% csrf_token %}
         {% if on_watchlist %}
@@ -20,6 +20,15 @@
     </form>
 {% endif %}
 
+<!-- --- Close auction button --- -->
+{% if user.id == auction.seller_id.id %}
+    <form action="{% url 'auctions:watchlist' %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Close auction" style="background-color: rgba(255, 30, 0, 0.438);">
+        <input type="hidden" name="next" value="{{ request.path }}">
+        <input type="hidden" name="auction_id" value="{{ auction.id }}">
+    </form>
+{% endif %}
 <!-- --- Item Description --- -->
 {% if auction.image_url %}
     <img src="{{ auction.image_url }}" alt="{{ auction.title }} photo"  width="350" height="400">
