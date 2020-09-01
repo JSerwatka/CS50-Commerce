@@ -14,10 +14,6 @@ from .models import User, Auction, Bid, Comment, Watchlist
 
 #TODO: delete next page in watchlist and use just auction id
 #TODO: the same in bid
-#TODO: delete next page in watchlist and use just auction id
-#TODO: the same in bid
-#TODO: change all _id in models to without _id
-#TODO: adimn page update
 #TODO: comment section create
 #TODO: user page - sold and bought
 #TODO: close auction with no bets - else statement to fill

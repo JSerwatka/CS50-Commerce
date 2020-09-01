@@ -44,7 +44,7 @@ class Auction(models.Model):
         verbose_name_plural = "auctions"
 
     def __str__(self):
-        return f"Item: {self.title}, seller: {self.seller}"
+        return f"Auction title: {self.title}, seller: {self.seller}"
 
 class Bid(models.Model):
     # Model fields
