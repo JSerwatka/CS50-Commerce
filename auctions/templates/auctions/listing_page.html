@@ -2,6 +2,8 @@
 
 {% block body %}
 <h1>{{auction.title}}</h1>
+
+<!-- --- Watchlist button --- -->
 {% if user.is_authenticated %}
     <form action="{% url 'auctions:watchlist' %}" method="POST">
         {% csrf_token %}
@@ -17,18 +19,30 @@
         <input type="hidden" name="auction_id" value="{{ auction.id }}">
     </form>
 {% endif %}
+
+<!-- --- Item Description --- -->
 {% if auction.image_url %}
     <img src="{{ auction.image_url }}" alt="{{ auction.title }} photo"  width="350" height="400">
 {% endif %}
 <h6>{{auction.description}}</h6>
 <h6>Created on: {{auction.publication_date}}</h6>
 <h3>Current Price {{auction.current_price}} $</h3>
+
+<!-- --- Bid info and form --- -->
 {% if bid_amount != 0 %}
     {{ bid_amount }} bid(s) so far. {{ message }}
 {% else %}
     No bids so far.
 {% endif %}
+{% if user.is_authenticated %}
+    <form action="{% url 'auctions:bid' %}" method="POST">
+        {% csrf_token %}
+        <input type="number" name="bid" placeholder="Bid" step="0.01">
+        <input type="submit" value="Place Bid">
+    </form>
+{% endif %}
 
+<!-- --- Detail --- -->
 <h2>Details</h2>
 <ul>
     <li>Listed by: {{auction.seller_id.username}}</li>
