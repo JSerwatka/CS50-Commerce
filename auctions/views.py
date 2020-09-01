@@ -225,11 +225,28 @@ def bid(request):
 
                 #TODO: update error page
                 return HttpResponse("Error- Your bid is to small")
-
-            
-
-
+    #TODO: update error page
     return HttpResponse("Error - this method is not allowed")
+
+def categories(request, category=None):
+    # Get all possible categories
+    categories = Auction.CATEGORY
+
+    # Check if valid category as URL parameter
+    if category is not None:
+        if category in [x[0] for x in categories]:
+            # Get all auctions from this category
+            auctions = Auction.objects.filter(category=category)
+            return render(request, "auctions/category_auctions.html", {
+                "auctions": auctions
+            })
+        else:
+            #TODO: update error page
+            return HttpResponse("Error - category incorrect")
+
+    return render(request, "auctions/categories.html", {
+        "categories": categories
+    })
 
 def login_view(request):
     if request.method == "POST":

@@ -1,0 +1,11 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <ul>
+        {% for auction in auctions %}
+            <li><a href="{% url 'auctions:listing_page' auction_id=auction.id %}"> {{ auction.title }}: {{ auction.description }} {{auction.category}} {{auction.current_price}} {{auction.publication_date}}</a></li>
+        {% empty %}
+            No auctions in this category yet.
+        {% endfor %}
+    </ul>
+{% endblock %}
