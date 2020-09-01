@@ -1,6 +1,5 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-#TODO: Add __str__ representation
 
 class User(AbstractUser):
     pass
@@ -43,6 +42,9 @@ class Auction(models.Model):
         verbose_name = "auction"
         verbose_name_plural = "auctions"
 
+    def __str__(self):
+        return f"Item: {self.title}, seller: {self.seller_id}"
+
 class Bid(models.Model):
     # Model fields
     # auto: bid_id
@@ -55,6 +57,9 @@ class Bid(models.Model):
         verbose_name = "bid"
         verbose_name_plural = "bids"
 
+    def __str__(self):
+        return f"{self.user_id} bid {self.bid_price} $ in {self.auction_id}"
+
 class Comment(models.Model):
     # Model fields
     # auto: comment_id
@@ -66,12 +71,14 @@ class Comment(models.Model):
         verbose_name = "comment"
         verbose_name_plural = "comments"
 
+    def __str__(self):
+        return f"Comment {self.id} on auction {self.auction_id} made by {self.user_id}"
 
 class Watchlist(models.Model):
     # Model field
     # auto: watchlist_id
     auction_id = models.ForeignKey(Auction, on_delete=models.CASCADE)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name="watchlist")
 
     class Meta:
         verbose_name = "watchlist"
@@ -79,3 +86,5 @@ class Watchlist(models.Model):
         # Forces to not have auction duplicates for one user
         unique_together = ["auction_id", "user_id"]
 
+    def __str__(self):
+        return f"{self.auction_id} on user {self.user_id} watchlist"

@@ -2,12 +2,21 @@
 
 {% block body %}
 <h1>{{auction.title}}</h1>
-<form action="{% url 'auctions:watchlist' %}" method="POST">
-    {% csrf_token %}
-    <input type="submit" value="Add to watchlist">
-    <input type="hidden" name="next" value="{{ request.path }}">
-    <input type="hidden" name="auction_id" value="{{ auction.id }}">
-</form>
+{% if user.is_authenticated %}
+    <form action="{% url 'auctions:watchlist' %}" method="POST">
+        {% csrf_token %}
+        {% if on_watchlist %}
+            <input type="submit" value="Remove from watchlist">
+            <input type="hidden" name="on_watchlist" value="True">
+        {% else %}
+            <input type="submit" value="Add to watchlist">
+            <input type="hidden" name="on_watchlist" value="False">
+        {% endif %}
+
+        <input type="hidden" name="next" value="{{ request.path }}">
+        <input type="hidden" name="auction_id" value="{{ auction.id }}">
+    </form>
+{% endif %}
 {% if auction.image_url %}
     <img src="{{ auction.image_url }}" alt="{{ auction.title }} photo"  width="350" height="400">
 {% endif %}

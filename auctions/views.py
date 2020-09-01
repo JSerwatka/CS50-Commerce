@@ -70,8 +70,25 @@ def create_listing(request):
     })
 
 def listing_page(request, auction_id):
-    # Get current auction
-    auction = Auction.objects.get(pk=auction_id)
+    # Get current auction if exists
+    try:
+        auction = Auction.objects.get(pk=auction_id)
+    except Auction.DoesNotExist:
+        return HttpResponse("Error-auction id doesn't exist")
+
+    # If user logged in, check if auction already in watchlist
+    if request.user.is_authenticated:
+        watchlist_item = Watchlist.objects.filter(
+                auction_id = auction_id,
+                user_id = User.objects.get(id=request.user.id)
+        ).first()
+
+        if watchlist_item is not None:
+            on_watchlist = True
+        else:
+            on_watchlist = False
+    else:
+        on_watchlist = False
 
     # Get info about bids
     bid_amount = Bid.objects.filter(auction_id=auction_id).count()
@@ -89,7 +106,8 @@ def listing_page(request, auction_id):
     return render(request, "auctions/listing_page.html", {
         "auction": auction,
         "bid_amount": bid_amount,
-        "bid_message": bid_message
+        "bid_message": bid_message,
+        "on_watchlist": on_watchlist
     })
 
 @login_required(login_url="auctions:login")
@@ -105,24 +123,40 @@ def watchlist(request):
             #TODO: update error page
             return HttpResponse("Error-please don't change my html code")
         
-        # Save it to watchlist model
-        try:
-            watchlist_item = Watchlist(
-                auction_id = Auction.objects.get(pk=auction_id),
-                user_id = User.objects.get(id=request.user.id)
-            )
-            watchlist_item.save()
         # Make sure that auction exists
+        try:
+            auction_id = Auction.objects.get(pk=auction_id)
+            user_id = User.objects.get(id=request.user.id)
         except Auction.DoesNotExist:
             #TODO: update error page
             return HttpResponse("Error-auction id doesn't exist")
-        # Make sure that it is not duplicate for current user
-        except IntegrityError:
-            #TODO: update error page
-            return HttpResponse("Error-auction already in your watchlist")
+
+        if request.POST.get("on_watchlist") == "True":
+            # Delete it from watchlist model
+            watchlist_item_to_delete = Watchlist.objects.filter(
+                user_id = user_id,
+                auction_id = auction_id
+            )
+            watchlist_item_to_delete.delete()
+        else:
+            print(auction_id)
+            print(user_id)
+            # Save it to watchlist model
+            try:
+                watchlist_item = Watchlist(
+                    user_id = user_id,
+                    auction_id = auction_id
+                )
+                print(watchlist_item)
+                watchlist_item.save()
+            # Make sure it is not duplicated for current user
+            except IntegrityError:
+                #TODO: update error page
+                return HttpResponse("Error-auction already in your watchlist")
 
         return HttpResponseRedirect(previous_page)
 
+    #TODO: change to related name
     watchlisted = Watchlist.objects.filter(user_id=request.user.id)
 
     return render(request, "auctions/watchlist.html", {
