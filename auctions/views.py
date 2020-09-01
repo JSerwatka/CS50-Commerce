@@ -181,7 +181,7 @@ def bid(request):
     if request.method == "POST":
         form = BidForm(request.POST)
         if form.is_valid():
-            bid_price = form.cleaned_data["bid_price"]
+            bid_price = float(form.cleaned_data["bid_price"])
             # Info from listing page
             auction_id = request.POST.get("auction_id")
             previous_page = request.POST.get('next')
@@ -211,9 +211,15 @@ def bid(request):
 
             # Check if current bid is the highest / else save new bid
             highest_bid = Bid.objects.filter(auction_id=auction_id).order_by('-bid_price').first()
-            if highest_bid is None or bid_price > highest_bid:
-                new_bid = Bid(auction_id = auction_id, user_id = user_id, bid_price = bid_price)
+            if highest_bid is None or bid_price > highest_bid.bid_price:
+                # Add new bid to db
+                new_bid = Bid(auction_id=auction_id, user_id=user_id, bid_price=bid_price)
                 new_bid.save()
+
+                # Update current highest price
+                auction_id.current_price = bid_price
+                auction_id.save()
+
                 return HttpResponseRedirect(previous_page)
             else:
 
