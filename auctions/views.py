@@ -20,6 +20,7 @@ from .models import User, Auction, Bid, Comment, Watchlist
 #TODO: adimn page update
 #TODO: comment section create
 #TODO: user page - sold and bought
+#TODO: close auction with no bets - else statement to fill
 
 # ----------------------
 # ------  Forms  -------
@@ -106,8 +107,8 @@ def listing_page(request, auction_id):
         auction.save()
 
     # Get info about bids
-    bid_amount = Bid.objects.filter(auction_id=auction_id).count()
-    highest_bid = Bid.objects.filter(auction_id=auction_id).order_by('-bid_price').first()
+    bid_amount = Bid.objects.filter(auction=auction_id).count()
+    highest_bid = Bid.objects.filter(auction=auction_id).order_by('-bid_price').first()
 
     
     # Show auction only to the winner if no longer available
@@ -135,7 +136,7 @@ def listing_page(request, auction_id):
          # If user logged in, check if auction already in watchlist
         if request.user.is_authenticated:
             watchlist_item = Watchlist.objects.filter(
-                    auction_id = auction_id,
+                    auction = auction_id,
                     user_id = User.objects.get(id=request.user.id)
             ).first()
 
@@ -178,7 +179,7 @@ def watchlist(request):
         
         # Make sure that auction exists
         try:
-            auction_id = Auction.objects.get(pk=auction_id)
+            auction = Auction.objects.get(pk=auction_id)
             user_id = User.objects.get(id=request.user.id)
         except Auction.DoesNotExist:
             #TODO: update error page
@@ -188,7 +189,7 @@ def watchlist(request):
             # Delete it from watchlist model
             watchlist_item_to_delete = Watchlist.objects.filter(
                 user_id = user_id,
-                auction_id = auction_id
+                auction = auction
             )
             watchlist_item_to_delete.delete()
         else:
@@ -196,7 +197,7 @@ def watchlist(request):
             try:
                 watchlist_item = Watchlist(
                     user_id = user_id,
-                    auction_id = auction_id
+                    auction = auction
                 )
                 watchlist_item.save()
             # Make sure it is not duplicated for current user
@@ -207,7 +208,7 @@ def watchlist(request):
         return HttpResponseRedirect(previous_page)
 
 
-    watchlist_auctions_ids = User.objects.get(id=request.user.id).watchlist.values_list("auction_id")
+    watchlist_auctions_ids = User.objects.get(id=request.user.id).watchlist.values_list("auction")
     watchlist_items = Auction.objects.filter(id__in=watchlist_auctions_ids, closed=False)
 
     return render(request, "auctions/watchlist.html", {
@@ -236,27 +237,27 @@ def bid(request):
             
             # # Make sure that auction exists
             try:
-                auction_id = Auction.objects.get(pk=auction_id)
+                auction = Auction.objects.get(pk=auction_id)
                 user_id = User.objects.get(id=request.user.id)
             except Auction.DoesNotExist:
                 #TODO: update error page
                 return HttpResponse("Error-auction id doesn't exist")
 
             # Make sure that bid is not made by the seller
-            if auction_id.seller == user_id:
+            if auction.seller == user_id:
                 #TODO: update error page
                 return HttpResponse("Error- you are the seller")
 
             # Check if current bid is the highest / else save new bid
-            highest_bid = Bid.objects.filter(auction_id=auction_id).order_by('-bid_price').first()
+            highest_bid = Bid.objects.filter(auction=auction).order_by('-bid_price').first()
             if highest_bid is None or bid_price > highest_bid.bid_price:
                 # Add new bid to db
-                new_bid = Bid(auction_id=auction_id, user_id=user_id, bid_price=bid_price)
+                new_bid = Bid(auction=auction, user_id=user_id, bid_price=bid_price)
                 new_bid.save()
 
                 # Update current highest price
-                auction_id.current_price = bid_price
-                auction_id.save()
+                auction.current_price = bid_price
+                auction.save()
 
                 return HttpResponseRedirect(previous_page)
             else:
