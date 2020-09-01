@@ -51,7 +51,7 @@ class BidForm(forms.ModelForm):
 # ----------------------
 def index(request):
     # Get all auctions descending
-    auctions = Auction.objects.all().order_by("-publication_date")
+    auctions = Auction.objects.filter(closed=False).order_by("-publication_date")
 
     return render(request, "auctions/index.html", {
         "auctions": auctions
@@ -91,42 +91,71 @@ def listing_page(request, auction_id):
     try:
         auction = Auction.objects.get(pk=auction_id)
     except Auction.DoesNotExist:
+        #TODO: update error page
         return HttpResponse("Error-auction id doesn't exist")
 
-    # If user logged in, check if auction already in watchlist
-    if request.user.is_authenticated:
-        watchlist_item = Watchlist.objects.filter(
-                auction_id = auction_id,
-                user_id = User.objects.get(id=request.user.id)
-        ).first()
-
-        if watchlist_item is not None:
-            on_watchlist = True
-        else:
-            on_watchlist = False
-    else:
-        on_watchlist = False
+    if request.method == "POST": 
+        # Close auction
+        auction.closed = True
+        auction.save()
 
     # Get info about bids
     bid_amount = Bid.objects.filter(auction_id=auction_id).count()
     highest_bid = Bid.objects.filter(auction_id=auction_id).order_by('-bid_price').first()
 
-    # Check who has made the highest bid
-    if highest_bid is not None:
-        if highest_bid.user_id == request.user.id:
-            bid_message = "Your bid is the highest bid"
-        else:
-            bid_message = "Highest bid made by " + highest_bid.user_id.username
-    else:
-        bid_message = None
+    
+    # Show auction only to the winner if no longer available
+    if auction.closed:
+        print(highest_bid)
+        if highest_bid is not None:
+            winner = highest_bid.user_id
+            print(winner)
+            print(auction.seller_id.id)
+            print(request.user.id)
+            # Diffrent view for winner, seller and other users
+            if request.user.id == auction.seller_id.id:
+                return render(request, "auctions/sold.html", {
+                    "auction": auction,
+                    "winner": winner
+                })
+            elif request.user.id == winner.id:
+                return render(request, "auctions/bought.html", {
+                    "auction": auction
+                })
+            else:
+                return HttpResponse("Error - auction no longer available")
 
-    return render(request, "auctions/listing_page.html", {
-        "auction": auction,
-        "bid_amount": bid_amount,
-        "bid_message": bid_message,
-        "on_watchlist": on_watchlist,
-        "bid_form": BidForm(),
-    })
+    else:
+         # If user logged in, check if auction already in watchlist
+        if request.user.is_authenticated:
+            watchlist_item = Watchlist.objects.filter(
+                    auction_id = auction_id,
+                    user_id = User.objects.get(id=request.user.id)
+            ).first()
+
+            if watchlist_item is not None:
+                on_watchlist = True
+            else:
+                on_watchlist = False
+        else:
+            on_watchlist = False
+
+        # Check who has made the highest bid
+        if highest_bid is not None:
+            if highest_bid.user_id == request.user.id:
+                bid_message = "Your bid is the highest bid"
+            else:
+                bid_message = "Highest bid made by " + highest_bid.user_id.username
+        else:
+            bid_message = None
+
+        return render(request, "auctions/listing_page.html", {
+            "auction": auction,
+            "bid_amount": bid_amount,
+            "bid_message": bid_message,
+            "on_watchlist": on_watchlist,
+            "bid_form": BidForm(),
+        })       
 
 @login_required(login_url="auctions:login")
 def watchlist(request):
@@ -173,7 +202,7 @@ def watchlist(request):
 
 
     watchlist_auctions_ids = User.objects.get(id=request.user.id).watchlist.values_list("auction_id")
-    watchlist_items = Auction.objects.filter(id__in=watchlist_auctions_ids)
+    watchlist_items = Auction.objects.filter(id__in=watchlist_auctions_ids, closed=False)
 
     return render(request, "auctions/watchlist.html", {
         "watchlist_items": watchlist_items
@@ -239,7 +268,7 @@ def categories(request, category=None):
     if category is not None:
         if category in [x[0] for x in categories]:
             # Get all auctions from this category
-            auctions = Auction.objects.filter(category=category)
+            auctions = Auction.objects.filter(category=category, closed=False)
             return render(request, "auctions/category_auctions.html", {
                 "auctions": auctions
             })

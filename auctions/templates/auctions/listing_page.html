@@ -11,7 +11,7 @@
             <input type="submit" value="Remove from watchlist" style="background-color: rgba(255, 30, 0, 0.438);">
             <input type="hidden" name="on_watchlist" value="True">
         {% else %}
-            <input type="submit" value="Add to watchlist" style="background-color: rgba(30, 255, 0, 0.438);>
+            <input type="submit" value="Add to watchlist" style="background-color: rgba(30, 255, 0, 0.438);">
             <input type="hidden" name="on_watchlist" value="False">
         {% endif %}
 
@@ -22,11 +22,9 @@
 
 <!-- --- Close auction button --- -->
 {% if user.id == auction.seller_id.id %}
-    <form action="{% url 'auctions:watchlist' %}" method="POST">
+    <form action="{% url 'auctions:listing_page' auction_id=auction.id %}" method="POST">
         {% csrf_token %}
         <input type="submit" value="Close auction" style="background-color: rgba(255, 30, 0, 0.438);">
-        <input type="hidden" name="next" value="{{ request.path }}">
-        <input type="hidden" name="auction_id" value="{{ auction.id }}">
     </form>
 {% endif %}
 <!-- --- Item Description --- -->

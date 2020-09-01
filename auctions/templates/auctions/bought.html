@@ -1,0 +1,8 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h1>Congratulations!</h1> 
+    <h3>You bough item: {{ auction.title }} for {{ auction.current_price }} $.</h3>
+    Please contect the seller <strong>{{ auction.seller_id.username }}</strong> and finalize your purchase.
+
+{% endblock %}

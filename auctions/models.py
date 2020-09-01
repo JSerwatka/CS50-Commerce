@@ -37,6 +37,7 @@ class Auction(models.Model):
     category = models.CharField(max_length=3, choices=CATEGORY, default=MOTORS)
     image_url = models.URLField(blank=True)
     publication_date = models.DateTimeField(auto_now_add=True)
+    closed = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = "auction"
