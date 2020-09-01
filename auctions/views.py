@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.utils.translation import ugettext_lazy as _
 from django import forms
 # Error exceptions
 from django.core.exceptions import ObjectDoesNotExist
@@ -29,6 +30,18 @@ class CreateListingForm(forms.ModelForm):
         model = Auction
         fields = ["title", "description", "category", "image_url"]
 
+class BidForm(forms.ModelForm):
+    class Meta:
+        model = Bid
+        fields = ["bid_price"]
+        labels = {
+            "bid_price": _("")
+        }
+        widgets = {
+            "bid_price": forms.NumberInput(attrs={
+                "placeholder": "Bid"
+            })
+        }
 # ----------------------
 # ------  Views  -------
 # ----------------------
@@ -107,7 +120,8 @@ def listing_page(request, auction_id):
         "auction": auction,
         "bid_amount": bid_amount,
         "bid_message": bid_message,
-        "on_watchlist": on_watchlist
+        "on_watchlist": on_watchlist,
+        "bid_form": BidForm(),
     })
 
 @login_required(login_url="auctions:login")
