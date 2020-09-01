@@ -154,10 +154,12 @@ def watchlist(request):
 
         return HttpResponseRedirect(previous_page)
 
-    watchlisted = User.objects.get(id=request.user.id).watchlist.all()
+
+    watchlist_auctions_ids = User.objects.get(id=request.user.id).watchlist.values_list("auction_id")
+    watchlist_items = Auction.objects.filter(id__in=watchlist_auctions_ids)
 
     return render(request, "auctions/watchlist.html", {
-        "watchlisted": watchlisted
+        "watchlist_items": watchlist_items
     })
 
 
