@@ -6,6 +6,7 @@
     {% csrf_token %}
     <input type="submit" value="Add to watchlist">
     <input type="hidden" name="next" value="{{ request.path }}">
+    <input type="hidden" name="auction_id" value="{{ auction.id }}">
 </form>
 {% if auction.image_url %}
     <img src="{{ auction.image_url }}" alt="{{ auction.title }} photo"  width="350" height="400">
@@ -19,11 +20,9 @@
     No bids so far.
 {% endif %}
 
-<!-- #TODO amount of bids -->
-
 <h2>Details</h2>
 <ul>
-    <!-- <li>Listed by: #TODO</li> -->
-    <l1>Category: {{auction.get_category_display}}</l1>
+    <li>Listed by: {{auction.seller_id.username}}</li>
+    <li>Category: {{auction.get_category_display}}</li>
 </ul>
 {% endblock %}

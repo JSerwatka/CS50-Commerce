@@ -1,10 +1,12 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django import forms
+# Error exceptions
+from django.core.exceptions import ObjectDoesNotExist
+from django.db import IntegrityError
 
 from .models import User, Auction, Bid, Comment, Watchlist
 
@@ -70,7 +72,7 @@ def create_listing(request):
 def listing_page(request, auction_id):
     # Get current auction
     auction = Auction.objects.get(pk=auction_id)
-    
+
     # Get info about bids
     bid_amount = Bid.objects.filter(auction_id=auction_id).count()
     highest_bid = Bid.objects.order_by('-bid_price').first()
@@ -79,7 +81,7 @@ def listing_page(request, auction_id):
     if highest_bid is not None:
         if highest_bid.user_id == request.user.id:
             bid_message = "Your bid is the current bid"
-        else: 
+        else:
             bid_message = "Highest bid made by " + highest_bid.user_id.username
     else:
         bid_message = None
@@ -92,10 +94,34 @@ def listing_page(request, auction_id):
 
 @login_required(login_url="auctions:login")
 def watchlist(request):
+    # Save info about the auction and go back to auction's page
     if request.method == "POST":
-        print("test")
-        next = request.POST.get('next', '/')
-        return HttpResponseRedirect(next)
+        # Info from listing page
+        auction_id = request.POST.get("auction_id")
+        previous_page = request.POST.get('next')
+
+        # Make sure, that id of page and id of auction are the same
+        if auction_id != previous_page[1:]:
+            #TODO: update error page
+            return HttpResponse("Error-please don't change my html code")
+        
+        # Save it to watchlist model
+        try:
+            watchlist_item = Watchlist(
+                auction_id = Auction.objects.get(pk=auction_id),
+                user_id = User.objects.get(id=request.user.id)
+            )
+            watchlist_item.save()
+        # Make sure that auction exists
+        except Auction.DoesNotExist:
+            #TODO: update error page
+            return HttpResponse("Error-auction id doesn't exist")
+        # Make sure that it is not duplicate for current user
+        except IntegrityError:
+            #TODO: update error page
+            return HttpResponse("Error-auction already in your watchlist")
+
+        return HttpResponseRedirect(previous_page)
 
     watchlisted = Watchlist.objects.filter(user_id=request.user.id)
 

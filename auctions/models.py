@@ -76,4 +76,6 @@ class Watchlist(models.Model):
     class Meta:
         verbose_name = "watchlist"
         verbose_name_plural = "watchlists"
+        # Forces to not have auction duplicates for one user
+        unique_together = ["auction_id", "user_id"]
 
