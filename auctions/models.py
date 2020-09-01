@@ -30,7 +30,7 @@ class Auction(models.Model):
 
     # Model fields
     # auto: auction_id
-    seller_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    seller = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=64, blank=False)
     description = models.TextField(blank=True)
     current_price = models.DecimalField(max_digits=11, decimal_places=2, default=0.0)
@@ -44,7 +44,7 @@ class Auction(models.Model):
         verbose_name_plural = "auctions"
 
     def __str__(self):
-        return f"Item: {self.title}, seller: {self.seller_id}"
+        return f"Item: {self.title}, seller: {self.seller}"
 
 class Bid(models.Model):
     # Model fields

@@ -76,7 +76,7 @@ def create_listing(request):
 
             # Save a record
             auction = Auction(
-                seller_id=User.objects.get(id=request.user.id),
+                seller=User.objects.get(id=request.user.id),
                 title = title,
                 description = description,
                 category = category,
@@ -116,10 +116,10 @@ def listing_page(request, auction_id):
         if highest_bid is not None:
             winner = highest_bid.user_id
             print(winner)
-            print(auction.seller_id.id)
+            print(auction.seller.id)
             print(request.user.id)
             # Diffrent view for winner, seller and other users
-            if request.user.id == auction.seller_id.id:
+            if request.user.id == auction.seller.id:
                 return render(request, "auctions/sold.html", {
                     "auction": auction,
                     "winner": winner
@@ -243,7 +243,7 @@ def bid(request):
                 return HttpResponse("Error-auction id doesn't exist")
 
             # Make sure that bid is not made by the seller
-            if auction_id.seller_id == user_id:
+            if auction_id.seller == user_id:
                 #TODO: update error page
                 return HttpResponse("Error- you are the seller")
 
