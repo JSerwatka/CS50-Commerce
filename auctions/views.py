@@ -162,6 +162,11 @@ def watchlist(request):
         "watchlist_items": watchlist_items
     })
 
+@login_required(login_url="auctions:login")
+def bid(request):
+    if request.method == "POST":
+        pass
+    return HttpResponse("Error - this method is not allowed")
 
 def login_view(request):
     if request.method == "POST":
