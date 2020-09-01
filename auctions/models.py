@@ -50,7 +50,7 @@ class Bid(models.Model):
     # Model fields
     # auto: bid_id
     auction = models.ForeignKey(Auction, on_delete=models.CASCADE)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     bid_date = models.DateTimeField(auto_now_add=True)
     bid_price = models.DecimalField(max_digits=11, decimal_places=2)
 
@@ -59,13 +59,13 @@ class Bid(models.Model):
         verbose_name_plural = "bids"
 
     def __str__(self):
-        return f"{self.user_id} bid {self.bid_price} $ in {self.auction}"
+        return f"{self.user} bid {self.bid_price} $ in {self.auction}"
 
 class Comment(models.Model):
     # Model fields
     # auto: comment_id
     auction = models.ForeignKey(Auction, on_delete=models.CASCADE)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     comment = models.TextField(blank=False)
 
     class Meta:
@@ -73,19 +73,19 @@ class Comment(models.Model):
         verbose_name_plural = "comments"
 
     def __str__(self):
-        return f"Comment {self.id} on auction {self.auction} made by {self.user_id}"
+        return f"Comment {self.id} on auction {self.auction} made by {self.user}"
 
 class Watchlist(models.Model):
     # Model field
     # auto: watchlist_id
     auction = models.ForeignKey(Auction, on_delete=models.CASCADE)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name="watchlist")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="watchlist")
 
     class Meta:
         verbose_name = "watchlist"
         verbose_name_plural = "watchlists"
         # Forces to not have auction duplicates for one user
-        unique_together = ["auction", "user_id"]
+        unique_together = ["auction", "user"]
 
     def __str__(self):
-        return f"{self.auction} on user {self.user_id} watchlist"
+        return f"{self.auction} on user {self.user} watchlist"

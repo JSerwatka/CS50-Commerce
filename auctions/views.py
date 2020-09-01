@@ -115,7 +115,7 @@ def listing_page(request, auction_id):
     if auction.closed:
         print(highest_bid)
         if highest_bid is not None:
-            winner = highest_bid.user_id
+            winner = highest_bid.user
             print(winner)
             print(auction.seller.id)
             print(request.user.id)
@@ -137,7 +137,7 @@ def listing_page(request, auction_id):
         if request.user.is_authenticated:
             watchlist_item = Watchlist.objects.filter(
                     auction = auction_id,
-                    user_id = User.objects.get(id=request.user.id)
+                    user = User.objects.get(id=request.user.id)
             ).first()
 
             if watchlist_item is not None:
@@ -149,10 +149,10 @@ def listing_page(request, auction_id):
 
         # Check who has made the highest bid
         if highest_bid is not None:
-            if highest_bid.user_id == request.user.id:
+            if highest_bid.user == request.user.id:
                 bid_message = "Your bid is the highest bid"
             else:
-                bid_message = "Highest bid made by " + highest_bid.user_id.username
+                bid_message = "Highest bid made by " + highest_bid.user.username
         else:
             bid_message = None
 
@@ -180,7 +180,7 @@ def watchlist(request):
         # Make sure that auction exists
         try:
             auction = Auction.objects.get(pk=auction_id)
-            user_id = User.objects.get(id=request.user.id)
+            user = User.objects.get(id=request.user.id)
         except Auction.DoesNotExist:
             #TODO: update error page
             return HttpResponse("Error-auction id doesn't exist")
@@ -188,7 +188,7 @@ def watchlist(request):
         if request.POST.get("on_watchlist") == "True":
             # Delete it from watchlist model
             watchlist_item_to_delete = Watchlist.objects.filter(
-                user_id = user_id,
+                user = user,
                 auction = auction
             )
             watchlist_item_to_delete.delete()
@@ -196,7 +196,7 @@ def watchlist(request):
             # Save it to watchlist model
             try:
                 watchlist_item = Watchlist(
-                    user_id = user_id,
+                    user = user,
                     auction = auction
                 )
                 watchlist_item.save()
@@ -238,13 +238,13 @@ def bid(request):
             # # Make sure that auction exists
             try:
                 auction = Auction.objects.get(pk=auction_id)
-                user_id = User.objects.get(id=request.user.id)
+                user = User.objects.get(id=request.user.id)
             except Auction.DoesNotExist:
                 #TODO: update error page
                 return HttpResponse("Error-auction id doesn't exist")
 
             # Make sure that bid is not made by the seller
-            if auction.seller == user_id:
+            if auction.seller == user:
                 #TODO: update error page
                 return HttpResponse("Error- you are the seller")
 
@@ -252,7 +252,7 @@ def bid(request):
             highest_bid = Bid.objects.filter(auction=auction).order_by('-bid_price').first()
             if highest_bid is None or bid_price > highest_bid.bid_price:
                 # Add new bid to db
-                new_bid = Bid(auction=auction, user_id=user_id, bid_price=bid_price)
+                new_bid = Bid(auction=auction, user=user, bid_price=bid_price)
                 new_bid.save()
 
                 # Update current highest price
