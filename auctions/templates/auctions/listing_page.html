@@ -40,6 +40,8 @@
         <!-- <input type="number" name="bid" placeholder="Bid" step="0.01"> -->
         {{ bid_form }}
         <input type="submit" value="Place Bid">
+        <input type="hidden" name="next" value="{{ request.path }}">
+        <input type="hidden" name="auction_id" value="{{ auction.id }}">
     </form>
 {% endif %}
 

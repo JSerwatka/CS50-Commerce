@@ -105,7 +105,7 @@ def listing_page(request, auction_id):
 
     # Get info about bids
     bid_amount = Bid.objects.filter(auction_id=auction_id).count()
-    highest_bid = Bid.objects.order_by('-bid_price').first()
+    highest_bid = Bid.objects.filter(auction_id=auction_id).order_by('-bid_price').first()
 
     # Check who has made the highest bid
     if highest_bid is not None:
@@ -179,7 +179,41 @@ def watchlist(request):
 @login_required(login_url="auctions:login")
 def bid(request):
     if request.method == "POST":
-        pass
+        form = BidForm(request.POST)
+        if form.is_valid():
+            bid_price = form.cleaned_data["bid_price"]
+            # Info from listing page
+            auction_id = request.POST.get("auction_id")
+            previous_page = request.POST.get('next')
+            
+            # Make sure that bid_price is positive
+            if bid_price <= 0:
+                #TODO: update error page
+                return HttpResponse("Error - bid price must be greate than 0")
+
+            # # Make sure, that id of page and id of auction are the same
+            if auction_id != previous_page[1:]:
+                #TODO: update error page
+                return HttpResponse("Error-please don't change my html code")
+            
+            # # Make sure that auction exists
+            try:
+                auction_id = Auction.objects.get(pk=auction_id)
+                user_id = User.objects.get(id=request.user.id)
+            except Auction.DoesNotExist:
+                #TODO: update error page
+                return HttpResponse("Error-auction id doesn't exist")
+
+            # Make sure that bid is not made by the seller
+            if auction_id.seller_id == user_id:
+                #TODO: update error page
+                return HttpResponse("Error- you are the seller")
+
+            # Check if current bid is the highest
+
+            
+
+
     return HttpResponse("Error - this method is not allowed")
 
 def login_view(request):
