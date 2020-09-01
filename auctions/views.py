@@ -209,7 +209,16 @@ def bid(request):
                 #TODO: update error page
                 return HttpResponse("Error- you are the seller")
 
-            # Check if current bid is the highest
+            # Check if current bid is the highest / else save new bid
+            highest_bid = Bid.objects.filter(auction_id=auction_id).order_by('-bid_price').first()
+            if highest_bid is None or bid_price > highest_bid:
+                new_bid = Bid(auction_id = auction_id, user_id = user_id, bid_price = bid_price)
+                new_bid.save()
+                return HttpResponseRedirect(previous_page)
+            else:
+
+                #TODO: update error page
+                return HttpResponse("Error- Your bid is to small")
 
             
 
