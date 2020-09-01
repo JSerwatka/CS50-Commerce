@@ -139,8 +139,6 @@ def watchlist(request):
             )
             watchlist_item_to_delete.delete()
         else:
-            print(auction_id)
-            print(user_id)
             # Save it to watchlist model
             try:
                 watchlist_item = Watchlist(
@@ -156,8 +154,7 @@ def watchlist(request):
 
         return HttpResponseRedirect(previous_page)
 
-    #TODO: change to related name
-    watchlisted = Watchlist.objects.filter(user_id=request.user.id)
+    watchlisted = User.objects.get(id=request.user.id).watchlist.all()
 
     return render(request, "auctions/watchlist.html", {
         "watchlisted": watchlisted

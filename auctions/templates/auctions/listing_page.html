@@ -6,10 +6,10 @@
     <form action="{% url 'auctions:watchlist' %}" method="POST">
         {% csrf_token %}
         {% if on_watchlist %}
-            <input type="submit" value="Remove from watchlist">
+            <input type="submit" value="Remove from watchlist" style="background-color: rgba(255, 30, 0, 0.438);">
             <input type="hidden" name="on_watchlist" value="True">
         {% else %}
-            <input type="submit" value="Add to watchlist">
+            <input type="submit" value="Add to watchlist" style="background-color: rgba(30, 255, 0, 0.438);>
             <input type="hidden" name="on_watchlist" value="False">
         {% endif %}
 
