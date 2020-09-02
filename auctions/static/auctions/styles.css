@@ -4,8 +4,92 @@ body {
     padding: 10px;
 }
 
-/* Error page */
-.error-container {
+/* ^^^^ Listing page ^^^^ */
+
+/* auction title */
+div.auction-title {
+    position: relative;
+    text-align: center;
+    padding: 20px 0;
+    background-color: rgba(221, 167, 20, 0.322);
+}
+
+div.auction-title input[type="submit"] {
+    position: absolute;
+    top: 15%;
+    right: 1%;
+}
+
+div.auction-title input[name="close_auction"] {
+    background-color: rgba(255, 30, 0, 0.438);
+}
+
+div.auction-title input[name="close_auction"]:hover {
+    background-color:  rgba(255, 30, 0, 0.575);
+}
+
+div.auction-title input[type="submit"][value="Remove from watchlist"] {
+    background-color:  rgba(255, 30, 0, 0.438);
+}
+
+div.auction-title input[type="submit"][value="Remove from watchlist"]:hover {
+    background-color:  rgba(255, 30, 0, 0.575);
+}
+
+div.auction-title input[type="submit"][value="Add to watchlist"] {
+    background-color: rgba(30, 255, 0, 0.438);
+}
+
+div.auction-title input[type="submit"][value="Add to watchlist"]:hover {
+    background-color: rgba(30, 255, 0, 0.678);
+}
+
+/* auction desciption */
+div.auction-info {
+    border: 1px solid black;
+    margin: 20px 0px;
+    padding: 20px;
+    background-color: rgba(128, 128, 128, 0.055);
+}
+
+div.auction-info img {
+    border: 1px solid rgba(158, 157, 157, 0.514);
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+div.section-description div.description-title{
+    font-size: 25px;
+}
+
+div.section-description {
+    font-size: 16px;
+    margin: 40px 0 15px 0;
+}
+
+div.auction-money {
+    margin: 20px 0 0 0;
+}
+
+div.auction-money div.current-price {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 0 0 5px 0;
+}
+
+div.auction-money form input[type="submit"]{
+    margin: 0 0 0 10px;
+    padding: 5px;
+}
+
+
+
+/* ^^^^^^^^^^^^^^^^^^^^^^ */
+
+
+/* ^^^^ Error page ^^^^ */
+div.error-container {
     position: relative;
     color: black;
 }
@@ -27,10 +111,14 @@ div.error-message {
     font-size: 35px;
     transform: translate(0%, 10%);
 }
+/* ^^^^^^^^^^^^^^^^^^^^^^ */
 
+
+/* --------------------- */
 /* --- Media Queries --- */
+/* --------------------- */
 
-/* Error page */
+/* ^^^^ Error page ^^^^ */
 @media screen and (min-width: 1360px) and (max-width: 1550px) {
     div.error-message {
         top: 45%;
@@ -95,3 +183,4 @@ div.error-message {
         font-size: 20px;
     }
 }
+/* ^^^^^^^^^^^^^^^^^^^^^^ */

@@ -19,7 +19,7 @@ from .models import User, Auction, Bid, Comment, Watchlist
 # ----------------------
 
 class CreateListingForm(forms.ModelForm):
-    title = forms.CharField(label="Title", max_length=64, required=True, widget=forms.TextInput(attrs={
+    title = forms.CharField(label="Title", max_length=30, required=True, widget=forms.TextInput(attrs={
                                                                             "autocomplete": "off",
                                                                             "aria-label": "title"
                                                                         }))
