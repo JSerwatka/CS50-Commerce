@@ -59,7 +59,7 @@ class Bid(models.Model):
         verbose_name_plural = "bids"
 
     def __str__(self):
-        return f"{self.user} bid {self.bid_price} $ in {self.auction}"
+        return f"{self.user} bid {self.bid_price} $ on {self.auction}"
 
 class Comment(models.Model):
     # Model fields

@@ -12,7 +12,6 @@ from django.db import IntegrityError
 from .models import User, Auction, Bid, Comment, Watchlist
 
 #TODO: comment section create
-#TODO: user page - sold and bought
 
 # ----------------------
 # ------  Forms  -------
@@ -43,6 +42,19 @@ class BidForm(forms.ModelForm):
         widgets = {
             "bid_price": forms.NumberInput(attrs={
                 "placeholder": "Bid"
+            })
+        }
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ["comment"]
+        labels = {
+            "comment": _("")
+        }
+        widgets = {
+            "comment": forms.Textarea(attrs={
+                "placeholder": "Comment here"
             })
         }
 # ----------------------
@@ -122,8 +134,8 @@ def listing_page(request, auction_id):
         #TODO: update error page
         return HttpResponse("Error-auction id doesn't exist")
 
+    # Close auction handling
     if request.method == "POST": 
-        # Close auction
         auction.closed = True
         auction.save()
 
@@ -131,8 +143,7 @@ def listing_page(request, auction_id):
     bid_amount = Bid.objects.filter(auction=auction_id).count()
     highest_bid = Bid.objects.filter(auction=auction_id).order_by('-bid_price').first()
 
-    
-    # Show auction only to the winner and seller if closed
+    # Show auction only to the winner and the seller if closed
     if auction.closed:
         if highest_bid is not None:
             winner = highest_bid.user
@@ -185,6 +196,7 @@ def listing_page(request, auction_id):
             "bid_message": bid_message,
             "on_watchlist": on_watchlist,
             "bid_form": BidForm(),
+            "comment_form": CommentForm()
         })       
 
 @login_required(login_url="auctions:login")

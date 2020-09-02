@@ -58,4 +58,10 @@
     <li>Listed by: <strong>{{auction.seller.username}}</strong></li>
     <li>Category: {{auction.get_category_display}}</li>
 </ul>
+
+<h2>Comments</h2>
+<form>
+    {{ comment_form }}
+    <input type="submit" value="Comment">
+</form>
 {% endblock %}
