@@ -1,13 +1,15 @@
+/* --- Styles --- */
+
 body {
     padding: 10px;
 }
 
+/* Error page */
 .error-container {
     position: relative;
     color: black;
 }
 
-/* Centered text */
 div.error-code {
     position: absolute;
     left: 50%;
@@ -26,6 +28,9 @@ div.error-message {
     transform: translate(0%, 10%);
 }
 
+/* --- Media Queries --- */
+
+/* Error page */
 @media screen and (min-width: 1360px) and (max-width: 1550px) {
     div.error-message {
         top: 45%;
@@ -68,13 +73,24 @@ div.error-message {
     }
 }
 
-@media screen and (min-width: 500px) and (max-width: 750px) {
+@media screen and (min-width: 600px) and (max-width: 750px) {
     div.error-code {
-        font-size: 50px
+        font-size: 45px
     }
 
     div.error-message {
         left: 42%;
+        top: 58%;
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    div.error-code {
+        font-size: 40px
+    }
+    div.error-message {
+        left: 40%;
         top: 58%;
         font-size: 20px;
     }
