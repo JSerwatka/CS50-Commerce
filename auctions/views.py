@@ -164,14 +164,8 @@ def listing_page(request, auction_id):
 def watchlist(request):
     # Save info about the auction and go back to auction's page
     if request.method == "POST":
-        # Info from listing page
+        # Info about the auction
         auction_id = request.POST.get("auction_id")
-        previous_page = request.POST.get('next')
-
-        # Make sure, that id of page and id of auction are the same
-        if auction_id != previous_page[1:]:
-            #TODO: update error page
-            return HttpResponse("Error-please don't change my html code")
         
         # Make sure that auction exists
         try:
@@ -180,7 +174,8 @@ def watchlist(request):
         except Auction.DoesNotExist:
             #TODO: update error page
             return HttpResponse("Error-auction id doesn't exist")
-
+        
+        # Add/delete from watchlist logic
         if request.POST.get("on_watchlist") == "True":
             # Delete it from watchlist model
             watchlist_item_to_delete = Watchlist.objects.filter(
@@ -201,7 +196,7 @@ def watchlist(request):
                 #TODO: update error page
                 return HttpResponse("Error-auction already in your watchlist")
 
-        return HttpResponseRedirect(previous_page)
+        return HttpResponseRedirect("/" + auction_id)
 
 
     watchlist_auctions_ids = User.objects.get(id=request.user.id).watchlist.values_list("auction")
