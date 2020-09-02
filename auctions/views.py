@@ -132,7 +132,6 @@ def listing_page(request, auction_id):
     try:
         auction = Auction.objects.get(pk=auction_id)
     except Auction.DoesNotExist:
-        #TODO: update error page
         return render(request, "auctions/error_handling.html", {
             "code": 404,
             "message": "Auction id doesn't exist"
@@ -213,8 +212,10 @@ def watchlist(request):
             auction = Auction.objects.get(pk=auction_id)
             user = User.objects.get(id=request.user.id)
         except Auction.DoesNotExist:
-            #TODO: update error page
-            return HttpResponse("Error-auction id doesn't exist")
+            return render(request, "auctions/error_handling.html", {
+                "code": 404,
+                "message": "Auction id doesn't exist"
+            })
         
         # Add/delete from watchlist logic
         if request.POST.get("on_watchlist") == "True":
@@ -265,8 +266,10 @@ def bid(request):
                 auction = Auction.objects.get(pk=auction_id)
                 user = User.objects.get(id=request.user.id)
             except Auction.DoesNotExist:
-                #TODO: update error page
-                return HttpResponse("Error-auction id doesn't exist")
+                return render(request, "auctions/error_handling.html", {
+                    "code": 404,
+                    "message": "Auction id doesn't exist"
+                })
 
             # Make sure that bid is not made by the seller
             if auction.seller == user:
@@ -286,7 +289,6 @@ def bid(request):
 
                 return HttpResponseRedirect("/" + auction_id)
             else:
-
                 #TODO: update error page
                 return HttpResponse("Error- Your bid is to small")
     #TODO: update error page
@@ -312,29 +314,38 @@ def categories(request, category=None):
         "categories": categories
     })
 
-def close_auction(reuqest, auction_id):
+@login_required(login_url="auctions:login")
+def close_auction(request, auction_id):
     # Get current auction if exists
     try:
         auction = Auction.objects.get(pk=auction_id)
     except Auction.DoesNotExist:
-        #TODO: update error page
-        return HttpResponse("Error-auction id doesn't exist")
+        return render(request, "auctions/error_handling.html", {
+            "code": 404,
+            "message": "Auction id doesn't exist"
+        })
     
     # Close auction
-    if reuqest.method == "POST":
+    if request.method == "POST":
         auction.closed = True
         auction.save() 
-    
+    elif request.method == "GET":
+        #TODO: update error page
+        return HttpResponse("Error - this method is not allowed")
+
     # Redirect to auction page
     return HttpResponseRedirect("/" + auction_id)
 
+@login_required(login_url="auctions:login")
 def handle_comment(request, auction_id):
     # Get current auction if exists
     try:
         auction = Auction.objects.get(pk=auction_id)
     except Auction.DoesNotExist:
-        #TODO: update error page
-        return HttpResponse("Error-auction id doesn't exist")
+        return render(request, "auctions/error_handling.html", {
+            "code": 404,
+            "message": "Auction id doesn't exist"
+        })
     
     # Post comment
     if request.method == "POST":
@@ -352,6 +363,9 @@ def handle_comment(request, auction_id):
             comment.save()
         else:
             return HttpResponse("Error - ups something went wrong")
+    elif request.method == "GET":
+        #TODO: update error page
+        return HttpResponse("Error - this method is not allowed")
     
     # Redirect to auction page
     return HttpResponseRedirect("/" + auction_id)
