@@ -11,9 +11,6 @@ from django.db import IntegrityError
 
 from .models import User, Auction, Bid, Comment, Watchlist
 
-
-#TODO: delete next page in watchlist and use just auction id
-#TODO: the same in bid
 #TODO: comment section create
 #TODO: user page - sold and bought
 #TODO: close auction with no bets - else statement to fill
@@ -109,12 +106,9 @@ def listing_page(request, auction_id):
     
     # Show auction only to the winner if no longer available
     if auction.closed:
-        print(highest_bid)
         if highest_bid is not None:
             winner = highest_bid.user
-            print(winner)
-            print(auction.seller.id)
-            print(request.user.id)
+
             # Diffrent view for winner, seller and other users
             if request.user.id == auction.seller.id:
                 return render(request, "auctions/sold.html", {
@@ -127,7 +121,6 @@ def listing_page(request, auction_id):
                 })
             else:
                 return HttpResponse("Error - auction no longer available")
-
     else:
          # If user logged in, check if auction already in watchlist
         if request.user.is_authenticated:
