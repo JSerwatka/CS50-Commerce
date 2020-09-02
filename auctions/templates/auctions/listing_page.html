@@ -22,11 +22,12 @@
 
 <!-- --- Close auction button --- -->
 {% if user.id == auction.seller.id %}
-    <form action="{% url 'auctions:listing_page' auction_id=auction.id %}" method="POST">
+    <form action="{% url 'auctions:close_auction' auction_id=auction.id %}" method="POST">
         {% csrf_token %}
-        <input type="submit" value="Close auction" style="background-color: rgba(255, 30, 0, 0.438);">
+        <input type="submit" value="Close auction" name="close_auction" style="background-color: rgba(255, 30, 0, 0.438);">
     </form>
 {% endif %}
+
 <!-- --- Item Description --- -->
 {% if auction.image_url %}
     <img src="{{ auction.image_url }}" alt="{{ auction.title }} photo"  width="350" height="400">
@@ -58,9 +59,19 @@
     <li>Listed by: <strong>{{auction.seller.username}}</strong></li>
     <li>Category: {{auction.get_category_display}}</li>
 </ul>
-
 <h2>Comments</h2>
-<form>
+<ul>
+    {% for comment in comments %}
+        <li><strong>{{ comment.user.username }}</strong> said: <em>{{ comment.comment }}</em> 
+            <br> 
+            <small>{{ comment.comment_date }}</small>
+        </li>
+    {% empty %}
+        No comments yet
+    {% endfor %}
+</ul>
+<form action="{% url 'auctions:handle_comment' auction_id=auction.id %}" method="POST">
+    {% csrf_token %}
     {{ comment_form }}
     <input type="submit" value="Comment">
 </form>

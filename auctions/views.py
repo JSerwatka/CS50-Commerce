@@ -110,7 +110,7 @@ def create_listing(request):
 
             # Save a record
             auction = Auction(
-                seller=User.objects.get(id=request.user.id),
+                seller=User.objects.get(pk=request.user.id),
                 title = title,
                 description = description,
                 category = category,
@@ -133,11 +133,6 @@ def listing_page(request, auction_id):
     except Auction.DoesNotExist:
         #TODO: update error page
         return HttpResponse("Error-auction id doesn't exist")
-
-    # Close auction handling
-    if request.method == "POST": 
-        auction.closed = True
-        auction.save()
 
     # Get info about bids
     bid_amount = Bid.objects.filter(auction=auction_id).count()
@@ -165,7 +160,6 @@ def listing_page(request, auction_id):
                 }) 
 
         return HttpResponse("Error - auction no longer available")
-
     else:
          # If user logged in, check if auction already in watchlist
         if request.user.is_authenticated:
@@ -198,6 +192,7 @@ def listing_page(request, auction_id):
             "bid_amount": bid_amount,
             "bid_message": bid_message,
             "on_watchlist": on_watchlist,
+            "comments": comments,
             "bid_form": BidForm(),
             "comment_form": CommentForm()
         })       
@@ -312,6 +307,50 @@ def categories(request, category=None):
     return render(request, "auctions/categories.html", {
         "categories": categories
     })
+
+def close_auction(reuqest, auction_id):
+    # Get current auction if exists
+    try:
+        auction = Auction.objects.get(pk=auction_id)
+    except Auction.DoesNotExist:
+        #TODO: update error page
+        return HttpResponse("Error-auction id doesn't exist")
+    
+    # Close auction
+    if reuqest.method == "POST":
+        auction.closed = True
+        auction.save() 
+    
+    # Redirect to auction page
+    return HttpResponseRedirect("/" + auction_id)
+
+def handle_comment(request, auction_id):
+    # Get current auction if exists
+    try:
+        auction = Auction.objects.get(pk=auction_id)
+    except Auction.DoesNotExist:
+        #TODO: update error page
+        return HttpResponse("Error-auction id doesn't exist")
+    
+    # Post comment
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            # Get all data from the form
+            comment = form.cleaned_data["comment"]
+
+            # Save a record
+            comment = Comment(
+                user=User.objects.get(pk=request.user.id),
+                comment = comment,
+                auction = auction
+            )
+            comment.save()
+        else:
+            return HttpResponse("Error - ups something went wrong")
+    
+    # Redirect to auction page
+    return HttpResponseRedirect("/" + auction_id)
 
 def login_view(request):
     if request.method == "POST":
