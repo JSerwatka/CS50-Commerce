@@ -11,7 +11,8 @@ from django.db import IntegrityError
 
 from .models import User, Auction, Bid, Comment, Watchlist
 
-#TODO: comment section create
+#TODO: Pritiify
+#TODO: error handling page
 
 # ----------------------
 # ------  Forms  -------
@@ -132,7 +133,10 @@ def listing_page(request, auction_id):
         auction = Auction.objects.get(pk=auction_id)
     except Auction.DoesNotExist:
         #TODO: update error page
-        return HttpResponse("Error-auction id doesn't exist")
+        return render(request, "auctions/error_handling.html", {
+            "code": 404,
+            "message": "Auction id doesn't exist"
+        })
 
     # Get info about bids
     bid_amount = Bid.objects.filter(auction=auction_id).count()
