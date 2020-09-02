@@ -212,19 +212,12 @@ def bid(request):
         form = BidForm(request.POST)
         if form.is_valid():
             bid_price = float(form.cleaned_data["bid_price"])
-            # Info from listing page
             auction_id = request.POST.get("auction_id")
-            previous_page = request.POST.get('next')
             
             # Make sure that bid_price is positive
             if bid_price <= 0:
                 #TODO: update error page
                 return HttpResponse("Error - bid price must be greate than 0")
-
-            # # Make sure, that id of page and id of auction are the same
-            if auction_id != previous_page[1:]:
-                #TODO: update error page
-                return HttpResponse("Error-please don't change my html code")
             
             # # Make sure that auction exists
             try:
@@ -250,7 +243,7 @@ def bid(request):
                 auction.current_price = bid_price
                 auction.save()
 
-                return HttpResponseRedirect(previous_page)
+                return HttpResponseRedirect("/" + auction_id)
             else:
 
                 #TODO: update error page
