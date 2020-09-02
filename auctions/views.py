@@ -235,8 +235,10 @@ def watchlist(request):
                 watchlist_item.save()
             # Make sure it is not duplicated for current user
             except IntegrityError:
-                #TODO: update error page
-                return HttpResponse("Error-auction already in your watchlist")
+                return render(request, "auctions/error_handling.html", {
+                    "code": 400,
+                    "message": "Auction is already on your watchlist"
+                })
 
         return HttpResponseRedirect("/" + auction_id)
 
@@ -258,8 +260,10 @@ def bid(request):
             
             # Make sure that bid_price is positive
             if bid_price <= 0:
-                #TODO: update error page
-                return HttpResponse("Error - bid price must be greate than 0")
+                return render(request, "auctions/error_handling.html", {
+                    "code": 400,
+                    "message": "Bid price must be greater than 0"
+                })
             
             # # Make sure that auction exists
             try:
@@ -273,8 +277,10 @@ def bid(request):
 
             # Make sure that bid is not made by the seller
             if auction.seller == user:
-                #TODO: update error page
-                return HttpResponse("Error- you are the seller")
+                return render(request, "auctions/error_handling.html", {
+                    "code": 400,
+                    "message": "Seller cannot bid"
+                })
 
             # Check if current bid is the highest / else save new bid
             highest_bid = Bid.objects.filter(auction=auction).order_by('-bid_price').first()
@@ -289,11 +295,15 @@ def bid(request):
 
                 return HttpResponseRedirect("/" + auction_id)
             else:
-                #TODO: update error page
-                return HttpResponse("Error- Your bid is to small")
+                return render(request, "auctions/error_handling.html", {
+                    "code": 400,
+                    "message": "Youre bid is too small"
+                })
         else:
-            #TODO: update error page
-            return HttpResponse("Error- Ups somthing went wrong")
+            return render(request, "auctions/error_handling.html", {
+                "code": 400,
+                "message": "Form is invalid"
+            })
     # Method not allowed - GET
     return render(request, "auctions/error_handling.html", {
         "code": 405,
@@ -313,8 +323,10 @@ def categories(request, category=None):
                 "auctions": auctions
             })
         else:
-            #TODO: update error page
-            return HttpResponse("Error - category incorrect")
+             return render(request, "auctions/error_handling.html", {
+                "code": 400,
+                "message": "Category is incorrect"
+            })
 
     return render(request, "auctions/categories.html", {
         "categories": categories
@@ -370,7 +382,10 @@ def handle_comment(request, auction_id):
             )
             comment.save()
         else:
-            return HttpResponse("Error - ups something went wrong")
+            return render(request, "auctions/error_handling.html", {
+                "code": 400,
+                "message": "Form is invalid"
+            })
     elif request.method == "GET":
         return render(request, "auctions/error_handling.html", {
             "code": 405,
