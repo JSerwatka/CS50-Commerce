@@ -1,0 +1,41 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<h1>Hi {{ user.username }}</h1>
+
+<h3>Selling</h3>
+<ul>
+    {% for auction in selling %}
+        <li><a href="{% url 'auctions:listing_page' auction_id=auction.id %}"> {{ auction.title }}: {{ auction.description }} {{auction.category}} {{auction.current_price}} {{auction.publication_date}}</a></li>
+    {% empty %}
+        Nothing here...
+    {% endfor %}
+</ul>
+
+<h3>Sold</h3>
+<ul>
+    {% for auction in sold %}
+        <li><a href="{% url 'auctions:listing_page' auction_id=auction.id %}"> {{ auction.title }}: {{ auction.description }} {{auction.category}} {{auction.current_price}} {{auction.publication_date}}</a></li>
+    {% empty %}
+        Nothing here...
+    {% endfor %}
+</ul>
+
+<h3>Bidding</h3>
+<ul>
+    {% for auction in bidding %}
+        <li><a href="{% url 'auctions:listing_page' auction_id=auction.id %}"> {{ auction.title }}: {{ auction.description }} {{auction.category}} {{auction.current_price}} {{auction.publication_date}}</a></li>
+    {% empty %}
+        Nothing here...
+    {% endfor %}
+</ul>
+
+<h3>Won</h3>
+<ul>
+    {% for auction in won %}
+        <li><a href="{% url 'auctions:listing_page' auction_id=auction.id %}"> {{ auction.title }}: {{ auction.description }} {{auction.category}} {{auction.current_price}} {{auction.publication_date}}</a></li>
+    {% empty %}
+        Nothing here...
+    {% endfor %}
+</ul>
+{% endblock %}

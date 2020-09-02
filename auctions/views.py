@@ -13,7 +13,6 @@ from .models import User, Auction, Bid, Comment, Watchlist
 
 #TODO: comment section create
 #TODO: user page - sold and bought
-#TODO: close auction with no bets - else statement to fill
 
 # ----------------------
 # ------  Forms  -------
@@ -55,6 +54,35 @@ def index(request):
 
     return render(request, "auctions/index.html", {
         "auctions": auctions
+    })
+
+@login_required(login_url="auctions:login")
+def user_panel(request):
+    # Helpers
+    all_distinct_bids =  Bid.objects.filter(user=request.user.id).values_list("auction", flat=True).distinct()
+    won = []
+
+    # Get auctions currently being sold by the user
+    selling = Auction.objects.filter(closed=False, seller=request.user.id).order_by("-publication_date").all()
+
+    # Get auction sold by the user
+    sold = Auction.objects.filter(closed=True, seller=request.user.id).order_by("-publication_date").all()
+
+    # Get auctions currently being bid by the user
+    bidding = Auction.objects.filter(closed=False, id__in = all_distinct_bids).all()
+
+    # Get auctions won by the user
+    for auction in Auction.objects.filter(closed=True, id__in = all_distinct_bids).all():
+        highest_bid = Bid.objects.filter(auction=auction.id).order_by('-bid_price').first()
+
+        if highest_bid.user.id == request.user.id:
+            won.append(auction)
+
+    return render(request, "auctions/user_panel.html", {
+        "selling": selling,
+        "sold": sold,
+        "bidding": bidding,
+        "won": won
     })
 
 @login_required(login_url="auctions:login")
