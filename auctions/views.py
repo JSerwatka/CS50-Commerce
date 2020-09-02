@@ -104,7 +104,7 @@ def listing_page(request, auction_id):
     highest_bid = Bid.objects.filter(auction=auction_id).order_by('-bid_price').first()
 
     
-    # Show auction only to the winner if no longer available
+    # Show auction only to the winner and seller if closed
     if auction.closed:
         if highest_bid is not None:
             winner = highest_bid.user
@@ -118,9 +118,15 @@ def listing_page(request, auction_id):
             elif request.user.id == winner.id:
                 return render(request, "auctions/bought.html", {
                     "auction": auction
-                })
-            else:
-                return HttpResponse("Error - auction no longer available")
+                })                
+        else:
+            if request.user.id == auction.seller.id:
+                return render(request, "auctions/closed_no_offer.html", {
+                    "auction": auction
+                }) 
+
+        return HttpResponse("Error - auction no longer available")
+
     else:
          # If user logged in, check if auction already in watchlist
         if request.user.is_authenticated:
