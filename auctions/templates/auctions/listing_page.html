@@ -30,7 +30,7 @@
 </div>
 
 <!-- --- Auction Description --- -->
-<div class="auction-info">
+<div class="section">
     {% if auction.image_url %}
         <img src="{{ auction.image_url }}" alt="{{ auction.title }} photo"  width="350" height="400">
     {% endif %}
@@ -68,28 +68,41 @@
 </div>
 
 <!-- --- Detail --- -->
-<div>
-    <h2>Details</h2>
+<div class="section">
+    <div class="section-title">Details</div>
     <ul>
-        <li>Listed by: <strong>{{auction.seller.username}}</strong></li>
+        <li>Seller: <strong>{{auction.seller.username}}</strong></li>
         <li>Category: {{auction.get_category_display}}</li>
     </ul>
 </div>
 
-<h2>Comments</h2>
-<ul>
-    {% for comment in comments %}
-        <li><strong>{{ comment.user.username }}</strong> said: <em>{{ comment.comment }}</em> 
-            <br> 
-            <small>{{ comment.comment_date }}</small>
-        </li>
-    {% empty %}
-        No comments yet
-    {% endfor %}
-</ul>
-<form action="{% url 'auctions:handle_comment' auction_id=auction.id %}" method="POST">
-    {% csrf_token %}
-    {{ comment_form }}
-    <input type="submit" value="Comment">
-</form>
+<!-- --- Comments --- -->
+<div class="section">
+    <div class="section-title">Comments</div>
+
+    <ul class="comment-section">
+        {% for comment in comments %}
+            <li class="single-comment">
+
+                <div class="comment-text">
+                    {{ comment.comment }}    
+                </div>
+                <div class="comment-author">
+                    ~ {{ comment.user.username }}
+                </div>
+                <small>{{ comment.comment_date }}</small>
+            </li>
+        {% empty %}
+            <div class="no-comment">
+                No comments yet
+            </div>
+        {% endfor %}
+    </ul>
+
+    <form action="{% url 'auctions:handle_comment' auction_id=auction.id %}" method="POST">
+        {% csrf_token %}
+        {{ comment_form }}
+        <input type="submit" value="Comment" class="btn btn-primary">
+    </form>
+</div>
 {% endblock %}
