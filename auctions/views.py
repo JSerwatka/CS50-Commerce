@@ -42,7 +42,9 @@ class BidForm(forms.ModelForm):
         }
         widgets = {
             "bid_price": forms.NumberInput(attrs={
-                "placeholder": "Bid"
+                "placeholder": "Bid",
+                "min": 0.01,
+                "max": 100000000000
             })
         }
 
