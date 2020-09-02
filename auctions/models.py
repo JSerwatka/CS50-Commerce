@@ -30,7 +30,7 @@ class Auction(models.Model):
 
     # Model fields
     # auto: auction_id
-    seller_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    seller = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=64, blank=False)
     description = models.TextField(blank=True)
     current_price = models.DecimalField(max_digits=11, decimal_places=2, default=0.0)
@@ -44,13 +44,13 @@ class Auction(models.Model):
         verbose_name_plural = "auctions"
 
     def __str__(self):
-        return f"Item: {self.title}, seller: {self.seller_id}"
+        return f"Auction title: {self.title}, seller: {self.seller}"
 
 class Bid(models.Model):
     # Model fields
     # auto: bid_id
-    auction_id = models.ForeignKey(Auction, on_delete=models.CASCADE)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    auction = models.ForeignKey(Auction, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     bid_date = models.DateTimeField(auto_now_add=True)
     bid_price = models.DecimalField(max_digits=11, decimal_places=2)
 
@@ -59,13 +59,13 @@ class Bid(models.Model):
         verbose_name_plural = "bids"
 
     def __str__(self):
-        return f"{self.user_id} bid {self.bid_price} $ in {self.auction_id}"
+        return f"{self.user} bid {self.bid_price} $ in {self.auction}"
 
 class Comment(models.Model):
     # Model fields
     # auto: comment_id
-    auction_id = models.ForeignKey(Auction, on_delete=models.CASCADE)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    auction = models.ForeignKey(Auction, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     comment = models.TextField(blank=False)
 
     class Meta:
@@ -73,19 +73,19 @@ class Comment(models.Model):
         verbose_name_plural = "comments"
 
     def __str__(self):
-        return f"Comment {self.id} on auction {self.auction_id} made by {self.user_id}"
+        return f"Comment {self.id} on auction {self.auction} made by {self.user}"
 
 class Watchlist(models.Model):
     # Model field
     # auto: watchlist_id
-    auction_id = models.ForeignKey(Auction, on_delete=models.CASCADE)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name="watchlist")
+    auction = models.ForeignKey(Auction, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="watchlist")
 
     class Meta:
         verbose_name = "watchlist"
         verbose_name_plural = "watchlists"
         # Forces to not have auction duplicates for one user
-        unique_together = ["auction_id", "user_id"]
+        unique_together = ["auction", "user"]
 
     def __str__(self):
-        return f"{self.auction_id} on user {self.user_id} watchlist"
+        return f"{self.auction} on user {self.user} watchlist"

@@ -4,7 +4,7 @@
 <h1>{{auction.title}}</h1>
 
 <!-- --- Watchlist button --- -->
-{% if user.is_authenticated and user.id != auction.seller_id.id %}
+{% if user.is_authenticated and user.id != auction.seller.id %}
     <form action="{% url 'auctions:watchlist' %}" method="POST">
         {% csrf_token %}
         {% if on_watchlist %}
@@ -21,7 +21,7 @@
 {% endif %}
 
 <!-- --- Close auction button --- -->
-{% if user.id == auction.seller_id.id %}
+{% if user.id == auction.seller.id %}
     <form action="{% url 'auctions:listing_page' auction_id=auction.id %}" method="POST">
         {% csrf_token %}
         <input type="submit" value="Close auction" style="background-color: rgba(255, 30, 0, 0.438);">
@@ -55,7 +55,7 @@
 <!-- --- Detail --- -->
 <h2>Details</h2>
 <ul>
-    <li>Listed by: {{auction.seller_id.username}}</li>
+    <li>Listed by: {{auction.seller.username}}</li>
     <li>Category: {{auction.get_category_display}}</li>
 </ul>
 {% endblock %}
