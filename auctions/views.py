@@ -181,6 +181,9 @@ def listing_page(request, auction_id):
         else:
             on_watchlist = False
 
+        # Get all the comments
+        comments = Comment.objects.filter(auction=auction_id)
+
         # Check who has made the highest bid
         if highest_bid is not None:
             if highest_bid.user == request.user.id:

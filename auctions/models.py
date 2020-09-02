@@ -67,7 +67,7 @@ class Comment(models.Model):
     auction = models.ForeignKey(Auction, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     comment = models.TextField(blank=False)
-
+    comment_date = models.DateTimeField(auto_now_add=True, null=True)
     class Meta:
         verbose_name = "comment"
         verbose_name_plural = "comments"
