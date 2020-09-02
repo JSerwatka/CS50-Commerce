@@ -291,8 +291,14 @@ def bid(request):
             else:
                 #TODO: update error page
                 return HttpResponse("Error- Your bid is to small")
-    #TODO: update error page
-    return HttpResponse("Error - this method is not allowed")
+        else:
+            #TODO: update error page
+            return HttpResponse("Error- Ups somthing went wrong")
+    # Method not allowed - GET
+    return render(request, "auctions/error_handling.html", {
+        "code": 405,
+        "message": "Method Not Allowed"
+    })
 
 def categories(request, category=None):
     # Get all possible categories
@@ -330,8 +336,10 @@ def close_auction(request, auction_id):
         auction.closed = True
         auction.save() 
     elif request.method == "GET":
-        #TODO: update error page
-        return HttpResponse("Error - this method is not allowed")
+        return render(request, "auctions/error_handling.html", {
+            "code": 405,
+            "message": "Method Not Allowed"
+        })
 
     # Redirect to auction page
     return HttpResponseRedirect("/" + auction_id)
@@ -364,8 +372,10 @@ def handle_comment(request, auction_id):
         else:
             return HttpResponse("Error - ups something went wrong")
     elif request.method == "GET":
-        #TODO: update error page
-        return HttpResponse("Error - this method is not allowed")
+        return render(request, "auctions/error_handling.html", {
+            "code": 405,
+            "message": "Method Not Allowed"
+        })
     
     # Redirect to auction page
     return HttpResponseRedirect("/" + auction_id)
