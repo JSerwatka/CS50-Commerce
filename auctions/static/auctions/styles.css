@@ -215,6 +215,17 @@ div.auction-list-info div.auction-list-date {
 }
 /* ^^^^^^^^^^^^^^^^^^^^^^ */
 
+/* ^^^^ Create listing ^^^^ */
+div.create-listing-form {
+    display: inline-block;
+    border: 1px solid rgba(0, 0, 0, 0.397);
+    background-color: rgba(189, 223, 243, 0.185);
+    padding: 40px;
+    margin-top: 20px;
+}
+
+/* ^^^^^^^^^^^^^^^^^^^^^^ */
+
 
 /* --------------------- */
 /* --- Media Queries --- */
