@@ -1,7 +1,7 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <h2>Category</h2>
+    <h2>{{category_full}}</h2>
 
     {% for auction in auctions %}
         {% include "auctions/listings_layout.html" %}

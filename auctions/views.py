@@ -319,10 +319,13 @@ def categories(request, category=None):
     # Check if valid category as URL parameter
     if category is not None:
         if category in [x[0] for x in categories]:
+            category_full = [x[1] for x in categories if x[0] == category][0]
+
             # Get all auctions from this category
             auctions = Auction.objects.filter(category=category, closed=False)
             return render(request, "auctions/category_auctions.html", {
-                "auctions": auctions
+                "auctions": auctions,
+                "category_full": category_full
             })
         else:
              return render(request, "auctions/error_handling.html", {
