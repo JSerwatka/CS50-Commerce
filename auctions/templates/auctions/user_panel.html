@@ -2,40 +2,41 @@
 
 {% block body %}
 <h2 style="text-align: center;">Hi {{ user.username }}</h2>
-<br>
-<h3>Selling</h3>
-<ul>
-    {% for auction in selling %}
-        {% include "auctions/listings_layout.html" %}
-    {% empty %}
-        Nothing here...
-    {% endfor %}
-</ul>
+<div class="user-panel">
+    <h3>Selling</h3>
+    <ul>
+        {% for auction in selling %}
+            {% include "auctions/listings_layout.html" %}
+        {% empty %}
+            Nothing here...
+        {% endfor %}
+    </ul>
 
-<h3>Sold</h3>
-<ul>
-    {% for auction in sold %}
-        {% include "auctions/listings_layout.html" %}  
-    {% empty %}
-        Nothing here...
-    {% endfor %}
-</ul>
+    <h3>Sold</h3>
+    <ul>
+        {% for auction in sold %}
+            {% include "auctions/listings_layout.html" %}  
+        {% empty %}
+            Nothing here...
+        {% endfor %}
+    </ul>
 
-<h3>Bidding</h3>
-<ul>
-    {% for auction in bidding %}
-        {% include "auctions/listings_layout.html" %}
-    {% empty %}
-        Nothing here...
-    {% endfor %}
-</ul>
+    <h3>Bidding</h3>
+    <ul>
+        {% for auction in bidding %}
+            {% include "auctions/listings_layout.html" %}
+        {% empty %}
+            Nothing here...
+        {% endfor %}
+    </ul>
 
-<h3>Won</h3>
-<ul>
-    {% for auction in won %}
-        {% include "auctions/listings_layout.html" %}
-    {% empty %}
-        Nothing here...
-    {% endfor %}
-</ul>
+    <h3>Won</h3>
+    <ul>
+        {% for auction in won %}
+            {% include "auctions/listings_layout.html" %}
+        {% empty %}
+            Nothing here...
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}
