@@ -1,10 +1,23 @@
+"""Contains all models used in the app."""
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 class User(AbstractUser):
+    """User model - inherited from Django implementation"""
     pass
 
 class Auction(models.Model):
+    """Auction model contains all info about one auction:
+    * auction's title
+    * auction's description
+    * who is selling
+    * auction's current price
+    * when auction was publicated
+    * what is auction's category
+    * auction's image URL
+    * is auction closed?
+    """
+
     # Categories - choices
     MOTORS = "MOT"
     FASHINON = "FAS"
@@ -47,6 +60,13 @@ class Auction(models.Model):
         return f"Auction id: {self.id}, title: {self.title}, seller: {self.seller}"
 
 class Bid(models.Model):
+    """Bid model contains all info about single bid:
+    * price
+    * who bid
+    * when
+    * on what auction
+    """
+
     # Model fields
     # auto: bid_id
     auction = models.ForeignKey(Auction, on_delete=models.CASCADE)
@@ -62,6 +82,13 @@ class Bid(models.Model):
         return f"{self.user} bid {self.bid_price} $ on {self.auction}"
 
 class Comment(models.Model):
+    """Comment model contains all info about single comment
+    * content
+    * who posted
+    * when
+    * on what auction
+    """
+
     # Model fields
     # auto: comment_id
     auction = models.ForeignKey(Auction, on_delete=models.CASCADE)
@@ -76,6 +103,11 @@ class Comment(models.Model):
         return f"Comment {self.id} on auction {self.auction} made by {self.user}"
 
 class Watchlist(models.Model):
+    """Watchlist model contains all info about object on watchlist
+    * which auction is on watchlist
+    * on whose watchlist this auction is
+    """
+
     # Model field
     # auto: watchlist_id
     auction = models.ForeignKey(Auction, on_delete=models.CASCADE)

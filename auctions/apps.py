@@ -1,3 +1,4 @@
+"""Contains app's config."""
 from django.apps import AppConfig
 
 
