@@ -1,11 +1,12 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <ul>
-        {% for auction in auctions %}
-            {% include "auctions/listings_layout.html" %}
-        {% empty %}
-            No auctions in this category yet.
-        {% endfor %}
-    </ul>
+    <h2>Category</h2>
+
+    {% for auction in auctions %}
+        {% include "auctions/listings_layout.html" %}
+    {% empty %}
+        No auctions in this category yet.
+    {% endfor %}
+
 {% endblock %}

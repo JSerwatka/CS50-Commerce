@@ -165,9 +165,54 @@ div.error-message {
 /* ^^^^^^^^^^^^^^^^^^^^^^ */
 
 /* ^^^^ Listing layout ^^^^ */
+div.auction-list-item {
+    display: flex;
+    border: 1px solid rgba(128, 128, 128, 0.651);
+    margin: 20px 15px;
+    color: black;
+}
 
+div.auction-list-item:hover {
+    color: rgba(197, 32, 32, 0.781);
+}
 
+div.auction-list-item div.auction-list-img {
+    height: 100%;
+    width: 20%;
+    margin-right: 10%;
+}
 
+div.auction-list-item img {
+    margin: 4.7% 30% 4.7% 30%;
+}
+
+div.auction-list-item div.auction-list-info {
+    height: 100%;
+    width: auto;
+    text-align: left;
+}
+
+div.auction-list-info div.auction-list-title {
+    font-size: 23px;
+    font-weight: bold;
+    padding: 5px 20px;
+}
+
+div.auction-list-info div.auction-list-price {
+    font-size: 18px;
+    padding: 5px 20px;
+}
+
+div.auction-list-info div.auction-list-category {
+    font-size: 15px;
+    padding: 10px 20px 5px 20px;
+}
+
+div.auction-list-info div.auction-list-date {
+    font-size: small;
+    font-style: italic;
+    padding: 3px 20px 20px 20px;
+}
 /* ^^^^^^^^^^^^^^^^^^^^^^ */
 
 
