@@ -98,11 +98,12 @@
             </div>
         {% endfor %}
     </ul>
-
-    <form action="{% url 'auctions:handle_comment' auction_id=auction.id %}" method="POST">
-        {% csrf_token %}
-        {{ comment_form }}
-        <input type="submit" value="Comment" class="btn btn-primary">
-    </form>
+    <div class="comment-form">
+        <form action="{% url 'auctions:handle_comment' auction_id=auction.id %}" method="POST">
+            {% csrf_token %}
+            {{ comment_form }}
+            <input type="submit" value="Comment" class="btn btn-primary">
+        </form>
+    </div>
 </div>
 {% endblock %}

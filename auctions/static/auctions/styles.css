@@ -5,18 +5,17 @@ body {
 }
 
 /* ^^^^ Listing page ^^^^ */
-
 /* auction title */
 div.auction-title {
     position: relative;
     text-align: center;
-    padding: 20px 0;
+    padding: 50px 0;
     background-color: rgba(221, 167, 20, 0.322);
 }
 
 div.auction-title input[type="submit"] {
     position: absolute;
-    top: 15%;
+    top: 10%;
     right: 1%;
 }
 
@@ -120,9 +119,23 @@ ul.comment-section div.no-comment {
     margin-left: -30px;
 }
 
+div.comment-form {
+    margin: 0 50px;
+}
 
+div.comment-form textarea {
+    display: block;
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: rgba(189, 223, 243, 0.185);
+    /* float: right; */
+    width: 100%;
+    height: 150px;
+}
 
-
+div.comment-form input[type="submit"] {
+    display:block;
+}
 /* ^^^^^^^^^^^^^^^^^^^^^^ */
 
 
@@ -155,6 +168,21 @@ div.error-message {
 /* --------------------- */
 /* --- Media Queries --- */
 /* --------------------- */
+
+/* ^^^^ Listing page ^^^^ */
+@media screen and (min-width: 950px) and (max-width: 1050px) {
+    div.auction-title > h2 {
+        font-size: 1.8rem;
+    }
+}
+
+@media screen and (max-width: 950px) {
+    div.auction-title > h2 {
+        font-size: 1.6rem;
+    }
+}
+
+/* ^^^^^^^^^^^^^^^^^^^^^^ */
 
 /* ^^^^ Error page ^^^^ */
 @media screen and (min-width: 1360px) and (max-width: 1550px) {
