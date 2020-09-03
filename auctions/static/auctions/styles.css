@@ -178,8 +178,8 @@ div.auction-list-item:hover {
 
 div.auction-list-item div.auction-list-img {
     height: 100%;
-    width: 20%;
-    margin-right: 10%;
+    width: 10%;
+    /* margin-right: 10%; */
 }
 
 div.auction-list-item img {
@@ -188,7 +188,7 @@ div.auction-list-item img {
 
 div.auction-list-item div.auction-list-info {
     height: 100%;
-    width: auto;
+    width:auto;
     text-align: left;
 }
 
@@ -223,13 +223,39 @@ div.create-listing-form {
     padding: 40px;
     margin-top: 20px;
 }
-
 /* ^^^^^^^^^^^^^^^^^^^^^^ */
 
 
 /* --------------------- */
 /* --- Media Queries --- */
 /* --------------------- */
+
+/* ^^^^ Listing layout ^^^^ */
+@media screen and (min-width: 1215px) and (max-width: 1537px) {
+    div.auction-list-item div.auction-list-img {
+        margin-right: 20px;
+    }
+}
+
+@media screen and (min-width: 900px) and (max-width: 1215px) {
+    div.auction-list-item div.auction-list-img {
+        margin-right: 40px;
+    }
+}
+
+@media screen and (min-width: 600px) and (max-width: 900px) {
+    div.auction-list-item div.auction-list-img {
+        margin-right: 60px;
+    }
+}
+
+@media screen and (max-width: 610px) {
+    div.auction-list-item div.auction-list-img {
+        margin-right: 70px;
+    }
+}
+/* ^^^^^^^^^^^^^^^^^^^^^^ */
+
 
 /* ^^^^ Listing page ^^^^ */
 @media screen and (min-width: 950px) and (max-width: 1050px) {
