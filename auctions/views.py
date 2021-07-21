@@ -123,7 +123,7 @@ def create_listing(request):
 
             # Save a record
             auction = Auction(
-                seller=User.objects.get(pk=request.user.id),
+                seller = User.objects.get(pk=request.user.id),
                 title = title,
                 description = description,
                 category = category,
@@ -347,9 +347,11 @@ def categories(request, category=None):
                 "message": "Category is incorrect"
             })
 
-    return render(request, "auctions/categories.html", {
-        "categories": categories_list
+    return render(request, "auctions/error_handling.html", {
+        "code": 404,
+        "message": "This page doesn not exist"
     })
+
 
 @login_required(login_url="auctions:login")
 def close_auction(request, auction_id):
