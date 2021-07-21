@@ -2,6 +2,10 @@
     --first-color-light2: #785fe2;
 }
 
+/* ^^^^ Listing page ^^^^ */
+/* ^^^^^^^^^^^^^^^^^^^^^^ */
+
+
 
 /* --- Styles --- */
 
@@ -29,13 +33,13 @@ body {
     padding: 20px 0 0 0;
 }
 
-/* ^^^^ Listing page ^^^^ */
-
-.category-name {
+.sub-title {
     text-align: center;
     padding: 20px 0;
     font-size: 2rem;
 }
+
+/* ^^^^ Listing page ^^^^ */
 
 /* auction title */
 div.auction-title {
