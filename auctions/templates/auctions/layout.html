@@ -47,7 +47,6 @@
                 {% endif %}
             </div>
         </header>
-
         <div class="l-navbar" id="nav-bar">
             <nav class="nav">
                 <div> 
@@ -99,16 +98,14 @@
                 </div>
             </nav>
         </div>
-        <h1>Auctions</h1>
         <div>
+            <div class="main-title">Auctions</div>
             {% if user.is_authenticated %}
-            Signed in as <strong>{{ user.username }}</strong>.
-            {% else %}
-            Not signed in.
+            Signed in as <strong>{{ user.username }}</strong>
             {% endif %}
+            <hr>
         </div>
         <div class="height-100 bg-light">
-            <hr>
             {% block body %}
             {% endblock %}
         </div>

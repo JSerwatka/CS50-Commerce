@@ -1,5 +1,5 @@
 :root {
-    --first-color: #4723D9;
+    --first-color-light2: #785fe2;
 }
 
 
@@ -15,12 +15,18 @@ body {
 }
 
 .nav-buttons .app-button {
-    background-color: var(--first-color);
-    border-color:  var(--first-color);
+    background-color: var(--first-color-light2);
+    border-color:  var(--first-color-light2);
 }
 
 .nav-link:hover {
     color: white;
+}
+
+.main-title {
+    text-align: center;
+    font-size: 2.5rem;
+    padding: 20px 0 0 0;
 }
 
 /* ^^^^ Listing page ^^^^ */
