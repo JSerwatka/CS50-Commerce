@@ -30,6 +30,13 @@ body {
 }
 
 /* ^^^^ Listing page ^^^^ */
+
+.category-name {
+    text-align: center;
+    padding: 20px 0;
+    font-size: 2rem;
+}
+
 /* auction title */
 div.auction-title {
     position: relative;
