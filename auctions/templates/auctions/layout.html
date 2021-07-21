@@ -36,23 +36,23 @@
             </div>
             <div class="nav-buttons">
                 {% if user.is_authenticated %}
-                    <button type="button" class="btn btn-primary app-button">
+                    <button type="button" class="btn btn-primary nav-button">
                         <a class="nav-link" href="{% url 'auctions:user_panel' %}">User Panel</a>
                     </button>
-                    <button type="button" class="btn btn-primary app-button">
+                    <button type="button" class="btn btn-primary nav-button">
                         <a class="nav-link" href="{% url 'auctions:create_listing' %}">Create Listing</a>
                     </button>
-                    <button type="button" class="btn btn-primary app-button">
+                    <button type="button" class="btn btn-primary nav-button">
                         <a class="nav-link" href="{% url 'auctions:watchlist' %}">Watchlist</a>
                     </button>
                     <button type="button" class="btn btn-danger">
                         <a class="nav-link" href="{% url 'auctions:logout' %}">Log Out</a>
                     </button>
                 {% else %}
-                    <button type="button" class="btn btn-primary">
+                    <button type="button" class="btn btn-primary nav-button">
                         <a class="nav-link" href="{% url 'auctions:login' %}">Log In</a>
                     </button>
-                    <button type="button" class="btn btn-primary">
+                    <button type="button" class="btn btn-primary nav-button">
                         <a class="nav-link" href="{% url 'auctions:register' %}">Register</a>
                     </button>
                 {% endif %}

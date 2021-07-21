@@ -1,5 +1,6 @@
 :root {
-    --first-color-light2: #785fe2;
+    --first-blue: #195DE6;
+    --first-blue-light: #4275da;
 }
 
 /* ^^^^ Listing page ^^^^ */
@@ -18,9 +19,13 @@ body {
     padding: 0;
 }
 
-.nav-buttons .app-button {
-    background-color: var(--first-color-light2);
-    border-color:  var(--first-color-light2);
+.nav-buttons .nav-button {
+    background-color: var(--first-blue);
+    border-color:  var(--first-blue);
+}
+.nav-button:hover {
+    background-color: var(--first-blue-light);
+    border-color:  var(--first-blue-light);
 }
 
 .nav-link:hover {
