@@ -1,7 +1,26 @@
+:root {
+    --first-color: #4723D9;
+}
+
+
 /* --- Styles --- */
 
 body {
     padding: 10px;
+}
+
+.nav-link {
+    color: white;
+    padding: 0;
+}
+
+.nav-buttons .app-button {
+    background-color: var(--first-color);
+    border-color:  var(--first-color);
+}
+
+.nav-link:hover {
+    color: white;
 }
 
 /* ^^^^ Listing page ^^^^ */
