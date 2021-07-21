@@ -1,7 +1,7 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-<h2>Watchlist</h2>
+<div class="sub-title">Watchlist</div>
 {% for auction in watchlist_items %}
     {% include "auctions/listings_layout.html" %}
 {% empty %}
