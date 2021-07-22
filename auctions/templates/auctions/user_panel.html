@@ -5,13 +5,22 @@
 <div class="sub-title">Hi {{ user.username }}</div>
 
 <div class="user-panel">
-    {% include "auctions/partials/listings_group.html" with auctions=selling sub_title="Selling" %}
+    <div class="card mb-3 pb-5">
+        {% include "auctions/partials/listings_group.html" with auctions=selling sub_title="Selling" %}
+    </div>
 
-    {% include "auctions/partials/listings_group.html" with auctions=sold sub_title="Sold" %}
+    <div class="card mb-3 pb-5">
+        {% include "auctions/partials/listings_group.html" with auctions=sold sub_title="Sold" %}
+    </div>
 
-    {% include "auctions/partials/listings_group.html" with auctions=bidding sub_title="Bidding" %}
+    <div class="card mb-3 pb-5">  
+        {% include "auctions/partials/listings_group.html" with auctions=bidding sub_title="Bidding" %}
+    </div>
 
-    {% include "auctions/partials/listings_group.html" with auctions=won sub_title="Won" %}
+    <div class="card pb-5">  
+        {% include "auctions/partials/listings_group.html" with auctions=won sub_title="Won" %}
+    </div>
+
 </div>
 
 {% endblock %}
