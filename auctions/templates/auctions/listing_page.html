@@ -56,8 +56,7 @@
                 <small>No bids so far.</small>
             {% endif %}
         </div>
-
-        {% if user.is_authenticated %}
+        {% if user.is_authenticated and user.id != auction.seller.id %}
             <form action="{% url 'auctions:bid' %}" method="POST" class="list-group-item">
                 {% csrf_token %}
                 <!-- <input type="number" name="bid" placeholder="Bid" step="0.01"> -->
