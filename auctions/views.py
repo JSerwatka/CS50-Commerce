@@ -28,7 +28,7 @@ class CreateListingForm(forms.ModelForm):
                                     'aria-label': "description",
                                     "class": "form-control"
                                     }))
-    image_url = forms.URLField(label="Image URL", required=False, widget=forms.URLInput(attrs={
+    image_url = forms.URLField(label="Image URL", required=True, widget=forms.URLInput(attrs={
                                         "class": "form-control"
                                     }))
 
