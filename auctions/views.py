@@ -52,7 +52,8 @@ class BidForm(forms.ModelForm):
             "bid_price": forms.NumberInput(attrs={
                 "placeholder": "Bid",
                 "min": 0.01,
-                "max": 100000000000
+                "max": 100000000000,
+                "class": "form-control"
             })
         }
 
@@ -66,7 +67,9 @@ class CommentForm(forms.ModelForm):
         }
         widgets = {
             "comment": forms.Textarea(attrs={
-                "placeholder": "Comment here"
+                "placeholder": "Comment here",
+                "class": "form-control",
+                "rows": 1
             })
         }
 
