@@ -1,11 +1,7 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <div class="sub-title">All Listings</div>
+    
+    {% include "auctions/partials/listings_group.html" with auctions=auctions sub_title="All Listings"%}
 
-    {% for auction in auctions %}
-        {% include "auctions/listings_layout.html" %}
-    {% empty %}
-        No auctions yet
-    {% endfor %}
 {% endblock %}
