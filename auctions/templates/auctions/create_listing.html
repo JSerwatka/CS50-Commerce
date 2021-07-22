@@ -1,29 +1,26 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-<div class="sub-title">Create Listing</div>
 
-<div class="create-listing-form">
+<div class="container">
+    <div class="sub-title">Create Listing</div>
+
     <form action="{% url 'auctions:create_listing' %}", method="POST">
         {% csrf_token %}
-        <div class="form-group">
-            {{ form.title.label }}:
-            <br>
+        <div class="form-group mb-3">
+            <label for="id_title">{{ form.title.label }}:</label>
             {{ form.title }}
         </div>
-        <div class="form-group">
-            {{ form.description.label }}:
-            <br>
+        <div class="form-group mb-3">
+            <label for="id_description">{{ form.description.label }}:</label>
             {{ form.description }}
         </div>
-        <div class="form-groupk">
-            {{ form.category.label }}:
-            <br>
+        <div class="form-group mb-3">
+            <label for="id_category">{{ form.category.label }}:</label>
             {{ form.category }}
         </div>
-        <div class="form-group">
-            {{ form.image_url.label }}:
-            <br>
+        <div class="form-group mb-3">
+            <label for="id_image_url">{{ form.image_url.label }}:</label>
             {{ form.image_url }}
         </div>
         <button type="submit" class="btn btn-primary" aria-label="submit">Submit</button>
