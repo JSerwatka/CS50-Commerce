@@ -3,7 +3,7 @@
     <a href="{% url 'auctions:listing_page' auction_id=auction.id %}">
     {% if auction.image_url %}
         <div class="card-image-wrapper">
-            <img class="card-img-top" src="{{ auction.image_url }}" alt="{{ auction.title }} photo">
+            <img class="card-img-top listing-img" src="{{ auction.image_url }}" alt="{{ auction.title }} photo">
         </div>
     {% endif %}
         <div class="card-body">

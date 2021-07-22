@@ -49,21 +49,28 @@ body {
 
 /* ^^^^ Listing page ^^^^ */
 
+/* auction img */
+.listing-page-img-wrapper {
+    text-align: center;
+}
+
+.listing-page-img {
+    max-width: 500px;
+}
+
+/* mian button */
+.listing-page-main-btn {
+    float: right;
+}
+
 /* auction title */
 .auction-title {
-    position: relative;
     text-align: center;
     padding: 50px 0;
 }
 
 .auction-title h2 {
     font-size: 2rem;
-}
-
-.auction-title input[type="submit"] {
-    position: absolute;
-    top: 10%;
-    right: 1%;
 }
 
 /* auction comments and detail */
@@ -146,7 +153,7 @@ div.error-message {
     width: 100%;
 }
 
-.card-img-top {
+.listing-img {
     height: 200px;
     object-fit: contain;
 }
