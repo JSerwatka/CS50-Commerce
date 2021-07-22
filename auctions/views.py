@@ -20,13 +20,21 @@ class CreateListingForm(forms.ModelForm):
     """Creates form for Auction model."""
     title = forms.CharField(label="Title", max_length=20, required=True, widget=forms.TextInput(attrs={
                                                                             "autocomplete": "off",
-                                                                            "aria-label": "title"
+                                                                            "aria-label": "title",
+                                                                            "class": "form-control"
                                                                         }))
     description = forms.CharField(label="Description", widget=forms.Textarea(attrs={
                                     'placeholder': "Tell more about the product",
-                                    'aria-label': "description"
+                                    'aria-label': "description",
+                                    "class": "form-control"
                                     }))
-    image_url = forms.URLField(label="Image URL", required=False)
+    image_url = forms.URLField(label="Image URL", required=False, widget=forms.URLInput(attrs={
+                                        "class": "form-control"
+                                    }))
+
+    category = forms.ChoiceField(required=True, choices=Auction.CATEGORY, widget=forms.Select(attrs={
+                                        "class": "form-control"
+                                    }))
 
     class Meta:
         model = Auction
@@ -337,7 +345,7 @@ def categories(request, category=None):
 
             # Get all auctions from this category
             auctions = Auction.objects.filter(category=category, closed=False)
-            return render(request, "auctions/category_auctions.html", {
+            return render(request, "auctions/category.html", {
                 "auctions": auctions,
                 "category_full": category_full
             })

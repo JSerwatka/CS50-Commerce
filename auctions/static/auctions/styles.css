@@ -206,65 +206,44 @@ div.error-message {
 /* ^^^^^^^^^^^^^^^^^^^^^^ */
 
 /* ^^^^ Listing layout ^^^^ */
-div.auction-list-item {
-    display: flex;
-    border: 1px solid rgba(128, 128, 128, 0.651);
-    margin: 20px 15px;
+.auction-item {
+    padding: 0;
+    margin-right: 20px;
+    width: 300px;
+    -webkit-box-shadow: 0px 0px 7px 3px rgb(216 216 216);
+    -moz-box-shadow: 0px 0px 7px 3px rgb(216 216 216);
+    box-shadow: 0px 0px 7px 3px rgb(216 216 216);
+}
+
+.auction-item a {
     color: black;
 }
 
-div.auction-list-item:hover {
+.auction-item a:hover {
     color: rgba(197, 32, 32, 0.781);
 }
 
-div.auction-list-item div.auction-list-img {
-    height: 100%;
-    width: 10%;
-    /* margin-right: 10%; */
+.card-image-wrapper {
+    background-color: rgba(243, 242, 242, 0.735);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    width: 100%;
 }
 
-div.auction-list-item img {
-    margin: 4.7% 30% 4.7% 30%;
+.card-img-top {
+    height: 200px;
+    object-fit: contain;
 }
 
-div.auction-list-item div.auction-list-info {
-    height: 100%;
-    width:auto;
-    text-align: left;
-}
-
-div.auction-list-info div.auction-list-title {
-    font-size: 23px;
-    font-weight: bold;
-    padding: 5px 20px;
-}
-
-div.auction-list-info div.auction-list-price {
-    font-size: 18px;
-    padding: 5px 20px;
-}
-
-div.auction-list-info div.auction-list-category {
-    font-size: 15px;
-    padding: 10px 20px 5px 20px;
-}
-
-div.auction-list-info div.auction-list-date {
+.auction-list-date {
     font-size: small;
     font-style: italic;
-    padding: 3px 20px 20px 20px;
+    color: grey;
 }
 /* ^^^^^^^^^^^^^^^^^^^^^^ */
 
-/* ^^^^ Create listing ^^^^ */
-div.create-listing-form {
-    display: inline-block;
-    border: 1px solid rgba(0, 0, 0, 0.397);
-    background-color: rgba(189, 223, 243, 0.185);
-    padding: 40px;
-    margin-top: 20px;
-}
-/* ^^^^^^^^^^^^^^^^^^^^^^ */
 
 /* ^^^^ User panel ^^^^ */
 div.user-panel > h3 {
@@ -277,48 +256,6 @@ div.user-panel > h3 {
 /* --------------------- */
 /* --- Media Queries --- */
 /* --------------------- */
-
-/* ^^^^ Listing layout ^^^^ */
-@media screen and (min-width: 1215px) and (max-width: 1537px) {
-    div.auction-list-item div.auction-list-img {
-        margin-right: 20px;
-    }
-}
-
-@media screen and (min-width: 900px) and (max-width: 1215px) {
-    div.auction-list-item div.auction-list-img {
-        margin-right: 40px;
-    }
-}
-
-@media screen and (min-width: 600px) and (max-width: 900px) {
-    div.auction-list-item div.auction-list-img {
-        margin-right: 60px;
-    }
-}
-
-@media screen and (max-width: 610px) {
-    div.auction-list-item div.auction-list-img {
-        margin-right: 70px;
-    }
-}
-/* ^^^^^^^^^^^^^^^^^^^^^^ */
-
-
-/* ^^^^ Listing page ^^^^ */
-@media screen and (min-width: 950px) and (max-width: 1050px) {
-    div.auction-title > h2 {
-        font-size: 1.8rem;
-    }
-}
-
-@media screen and (max-width: 950px) {
-    div.auction-title > h2 {
-        font-size: 1.6rem;
-    }
-}
-
-/* ^^^^^^^^^^^^^^^^^^^^^^ */
 
 /* ^^^^ Error page ^^^^ */
 @media screen and (min-width: 1360px) and (max-width: 1550px) {
