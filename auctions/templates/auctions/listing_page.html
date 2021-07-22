@@ -9,10 +9,10 @@
         <form action="{% url 'auctions:watchlist' %}" method="POST">
             {% csrf_token %}
             {% if on_watchlist %}
-                <input type="submit" value="Remove from watchlist">
+                <input type="submit" class="btn btn-danger" value="Remove from watchlist">
                 <input type="hidden" name="on_watchlist" value="True">
             {% else %}
-                <input type="submit" value="Add to watchlist">
+                <input type="submit" class="btn btn-success" value="Add to watchlist">
                 <input type="hidden" name="on_watchlist" value="False">
             {% endif %}
 
@@ -24,7 +24,7 @@
     {% if user.id == auction.seller.id %}
         <form action="{% url 'auctions:close_auction' auction_id=auction.id %}" method="POST">
             {% csrf_token %}
-            <input type="submit" value="Close auction" name="close_auction">
+            <input type="submit" class="btn btn-danger" value="Close auction" name="close_auction">
         </form>
     {% endif %}
 </div>

@@ -3,10 +3,6 @@
     --first-blue-light: #4275da;
 }
 
-/* ^^^^ Listing page ^^^^ */
-/* ^^^^^^^^^^^^^^^^^^^^^^ */
-
-
 
 /* --- Styles --- */
 
@@ -47,41 +43,20 @@ body {
 /* ^^^^ Listing page ^^^^ */
 
 /* auction title */
-div.auction-title {
+.auction-title {
     position: relative;
     text-align: center;
     padding: 50px 0;
-    background-color: rgba(221, 167, 20, 0.322);
 }
 
-div.auction-title input[type="submit"] {
+.auction-title h2 {
+    font-size: 2rem;
+}
+
+.auction-title input[type="submit"] {
     position: absolute;
     top: 10%;
     right: 1%;
-}
-
-div.auction-title input[name="close_auction"] {
-    background-color: rgba(255, 30, 0, 0.438);
-}
-
-div.auction-title input[name="close_auction"]:hover {
-    background-color:  rgba(255, 30, 0, 0.575);
-}
-
-div.auction-title input[type="submit"][value="Remove from watchlist"] {
-    background-color:  rgba(255, 30, 0, 0.438);
-}
-
-div.auction-title input[type="submit"][value="Remove from watchlist"]:hover {
-    background-color:  rgba(255, 30, 0, 0.575);
-}
-
-div.auction-title input[type="submit"][value="Add to watchlist"] {
-    background-color: rgba(30, 255, 0, 0.438);
-}
-
-div.auction-title input[type="submit"][value="Add to watchlist"]:hover {
-    background-color: rgba(30, 255, 0, 0.678);
 }
 
 /* auction desciption */
@@ -251,6 +226,7 @@ div.user-panel > h3 {
     padding: 0px 0px 10px 10px;
     border-bottom: 1px solid black;
 }
+/* ^^^^^^^^^^^^^^^^^^^^^^ */
 
 
 /* --------------------- */
