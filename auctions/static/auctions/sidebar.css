@@ -3,10 +3,10 @@
 :root {
     --header-height: 3rem;
     --nav-width: 68px;
-    --first-color: #4723D9;
-    --first-color-light: #AFA5D9;
-    --white-color: #f3f0fc;
-    --white-color-light: #f7f6fbd0;
+    --first-color: rgba(21, 95, 144, 0.8);
+    --first-color-light: rgba(212, 223, 230, 0.8);
+    --white-color: #f0f4fc;
+    --white-color-light: #f6f8fbd0;
     --body-font: 'Nunito', sans-serif;
     --normal-font-size: 1rem;
     --z-fixed: 100

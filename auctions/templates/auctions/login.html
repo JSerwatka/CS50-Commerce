@@ -19,7 +19,7 @@
             {% if request.GET.next %}
                 <input type="hidden" name="next" value="{{ request.GET.next }}">
             {% endif %}
-            <input class="btn btn-primary" type="submit" value="Login">
+            <input class="btn btn-primary btn-new-blue" type="submit" value="Login">
         </form>
         Don't have an account? <a href="{% url 'auctions:register' %}">Register here.</a>
     </div>
