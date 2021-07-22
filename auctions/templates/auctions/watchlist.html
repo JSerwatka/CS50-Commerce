@@ -1,12 +1,7 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-<div class="sub-title">Watchlist</div>
-{% for auction in watchlist_items %}
-    {% include "auctions/listings_layout.html" %}
-{% empty %}
-    No auctions yet
-{% endfor %}
 
+{% include "auctions/partials/listings_group.html" with auctions=watchlist_items sub_title="Watchlist" %}
 
 {% endblock %}

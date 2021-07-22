@@ -7,9 +7,7 @@
         {% for auction in auctions %}
             {% include "auctions/partials/listing_layout.html" %}
         {% empty %}
-            {% if request.path == index %}
-                No auctions yet.
-            {% endif %}
+            No auctions yet.
         {% endfor %}
     </div>
 </div>    
