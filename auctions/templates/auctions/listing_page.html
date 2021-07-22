@@ -1,24 +1,22 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-<div class="auction-title">
-    <h2>{{auction.title}}</h2>
-
+<div class="listing-page-main-btn">
     <!-- --- Watchlist button --- -->
     {% if user.is_authenticated and user.id != auction.seller.id %}
-        <form action="{% url 'auctions:watchlist' %}" method="POST">
-            {% csrf_token %}
-            {% if on_watchlist %}
-                <input type="submit" class="btn btn-danger" value="Remove from watchlist">
-                <input type="hidden" name="on_watchlist" value="True">
-            {% else %}
-                <input type="submit" class="btn btn-success" value="Add to watchlist">
-                <input type="hidden" name="on_watchlist" value="False">
-            {% endif %}
+    <form action="{% url 'auctions:watchlist' %}" method="POST">
+        {% csrf_token %}
+        {% if on_watchlist %}
+            <input type="submit" class="btn btn-danger" value="Remove from watchlist">
+            <input type="hidden" name="on_watchlist" value="True">
+        {% else %}
+            <input type="submit" class="btn btn-success" value="Add to watchlist">
+            <input type="hidden" name="on_watchlist" value="False">
+        {% endif %}
 
-            <input type="hidden" name="next" value="{{ request.path }}">
-            <input type="hidden" name="auction_id" value="{{ auction.id }}">
-        </form>
+        <input type="hidden" name="next" value="{{ request.path }}">
+        <input type="hidden" name="auction_id" value="{{ auction.id }}">
+    </form>
     {% endif %}
     <!-- --- Close auction button --- -->
     {% if user.id == auction.seller.id %}
@@ -29,10 +27,16 @@
     {% endif %}
 </div>
 
+<div class="auction-title">
+    <h2>{{auction.title}}</h2>
+</div>
+
 <!-- --- Auction Description --- -->
 <div class="card mb-3">
     {% if auction.image_url %}
-        <img src="{{ auction.image_url }}" class="card-img-top" alt="{{ auction.title }} photo">
+        <div class="listing-page-img-wrapper m-4">
+            <img src="{{ auction.image_url }}" class="card-img-top listing-page-img" alt="{{ auction.title }} photo">
+        </div>
     {% endif %}
 
     <div class="card-body mb-3">
