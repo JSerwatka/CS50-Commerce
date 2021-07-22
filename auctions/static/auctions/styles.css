@@ -103,32 +103,6 @@ body {
 
 /* ^^^^^^^^^^^^^^^^^^^^^^ */
 
-
-/* ^^^^ Error page ^^^^ */
-div.error-container {
-    position: relative;
-    color: black;
-}
-
-div.error-code {
-    position: absolute;
-    left: 50%;
-    top: 20%;
-    margin: 20px 0px;
-    color: rgba(255, 0, 0, 0.644);
-    font-size: 70px
-  }
-
-div.error-message {
-    position: absolute;
-    left: 44%;
-    top: 45%;
-    margin: 20px 0px;
-    font-size: 35px;
-    transform: translate(0%, 10%);
-}
-/* ^^^^^^^^^^^^^^^^^^^^^^ */
-
 /* ^^^^ Listing layout ^^^^ */
 .auction-item {
     padding: 0;
@@ -165,12 +139,26 @@ div.error-message {
 }
 /* ^^^^^^^^^^^^^^^^^^^^^^ */
 
+/* ^^^^ Error page ^^^^ */
+div.error-container {
+    position: relative;
+    color: black;
+}
 
-/* ^^^^ User panel ^^^^ */
-div.user-panel > h3 {
-    margin-top: 70px;
-    padding: 0px 0px 10px 10px;
-    border-bottom: 1px solid black;
+div.error-code {
+    position: absolute;
+    left: 50%;
+    top: 20%;
+    color: rgba(255, 0, 0, 0.644);
+    font-size: 70px
+  }
+
+div.error-message {
+    position: absolute;
+    left: 43%;
+    top: 40%;
+    font-size: 35px;
+    transform: translate(0%, 10%);
 }
 /* ^^^^^^^^^^^^^^^^^^^^^^ */
 

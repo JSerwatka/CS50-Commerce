@@ -485,3 +485,9 @@ def register(request):
         return HttpResponseRedirect(reverse("auctions:index"))
     else:
         return render(request, "auctions/register.html")
+
+def handle_not_found(request, exception):
+    return render(request, "auctions/error_handling.html", {
+            "code": 404,
+            "message": "Page not found"
+        })
